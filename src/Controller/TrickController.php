@@ -8,9 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController {
 
-    /**
-     * @Route("/trick", name="trick")
-     */
+    #[Route("/trick", name: "trick", methods: ['GET'])]
     public function index(): Response {
 
         return $this->render('trick.html.twig', [
