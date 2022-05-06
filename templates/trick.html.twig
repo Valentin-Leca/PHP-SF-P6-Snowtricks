@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="assets/img/test.jpg">
+        <h1>Name trick goes here</h1>
+        <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+
+    <div class="container-fluid tm-container-content tm-mt-60 text-center">
+        <div class="row tm-gallery">
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                <figure class="effect-ming tm-video-item">
+                    <a href="photo-detail.html"><img src="assets/img/test.jpg" alt="Image" class="img-fluid"></a>
+                </figure>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container-fluid, tm-container-content -->
+
+    <div class="container-fluid tm-mt-60 text-center">
+        <div class="row tm-mb-50">
+            <div class="col-1"></div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
+                <p>Description goes here</p>
+                <p>Description goes here</p>
+                <p>Description goes here</p>
+                <p>Description goes here</p>
+                <p>Description goes here</p>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container-fluid -->
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                <p>Created by goes here</p>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                <p>Group goes here</p>
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                <p>Creation date goes here</p>
+            </div>
+            {# If modification date exist in base, display this col #}
+            {# If modification date exist in base, display this col #}
+            {# If modification date exist in base, display this col #}
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                <p>Modification date goes here</p>
+            </div>
+            {# If modification date exist in base, display this col #}
+            {# If modification date exist in base, display this col #}
+            {# If modification date exist in base, display this col #}
+        </div> <!-- row -->
+    </div> <!-- container-fluid -->
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-10 offset-1">
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row tm-mb-50">
+            <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
+                <form id="comment-form" action="" method="POST" class="d-flex">
+                    <textarea class="form-control tm-search-input" rows="1" placeholder="Message"></textarea>
+                    <button class="btn btn-outline-success tm-search-btn" type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-10 offset-1">
+                <hr>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
