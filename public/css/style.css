@@ -178,6 +178,12 @@ a:hover { color:#009999; }
 	padding: 10px 20px;
 	width: 100%;
 	height: auto;
+    border: 0;
+    text-align: center;
+}
+
+.log-body {
+    margin-top: 20vh;
 }
 
 .form-group { margin-bottom: 25px; }
