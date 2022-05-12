@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid tm-mt-60">
+        <div class="row tm-mb-50 log-body">
+            <div class="col-lg-4 offset-4 col-12 mb-5">
+                <h2 class="tm-text-primary text-center mb-5">S'inscrire</h2>
+                <form id="login-form" action="" method="POST" class="tm-contact-form mx-auto">
+                    <div class="form-group mt-2 mb-2">
+                        <input type="text" name="login" class="form-control rounded-0" placeholder="Nom d'utilisateur" required />
+                    </div>
+                    <hr>
+                    <div class="form-group mt-2 mb-2">
+                        <input type="email" name="email" class="form-control rounded-0" placeholder="Email" required />
+                    </div>
+                    <hr>
+                    <div class="form-group mt-2 mb-2">
+                        <input type="password" name="password" class="form-control rounded-0" placeholder="Mot de passe" required />
+                    </div>
+                    <hr>
+                    <div class="form-group tm-text-right text-center mt-5">
+                        <button type="submit" class="btn btn-primary">Créer son compte</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> <!-- container-fluid, tm-container-content -->
+
+{% endblock %}
