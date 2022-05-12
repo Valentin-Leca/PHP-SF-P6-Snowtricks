@@ -18,6 +18,7 @@
                     <div class="form-group text-center mt-5 mb-5">
                         <a href="">Mot de passe oublié ?</a>
                     </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <div class="form-group tm-text-right text-center">
                         <button type="submit" class="btn btn-primary">Se connecter</button>
                     </div>
