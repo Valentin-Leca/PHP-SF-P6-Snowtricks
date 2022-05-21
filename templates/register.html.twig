@@ -6,23 +6,36 @@
         <div class="row tm-mb-50 log-body">
             <div class="col-lg-4 offset-4 col-12 mb-5">
                 <h2 class="tm-text-primary text-center mb-5">S'inscrire</h2>
-                <form id="register-form" action="" method="POST" class="tm-contact-form mx-auto">
+                {{ form_start(form, {
+                    'attr': {
+                        'class': 'tm-contact-form mx-auto',
+                        'id': 'register-form',
+                    }
+                }) }}
                     <div class="form-group mt-2 mb-2">
-                        <input type="text" name="login" class="form-control rounded-0" placeholder="Nom d'utilisateur" required />
+                        {{ form_widget(form.login) }}
+                        {{ form_errors(form.login) }}
                     </div>
                     <hr>
                     <div class="form-group mt-2 mb-2">
-                        <input type="email" name="email" class="form-control rounded-0" placeholder="Email" required />
+                        {{ form_widget(form.mail) }}
+                        {{ form_errors(form.mail) }}
                     </div>
                     <hr>
                     <div class="form-group mt-2 mb-2">
-                        <input type="password" name="password" class="form-control rounded-0" placeholder="Mot de passe" required />
+                        {{ form_widget(form.password.first) }}
+                        {{ form_errors(form.password.first) }}
+                    </div>
+                    <hr>
+                    <div class="form-group mt-2 mb-2">
+                        {{ form_widget(form.password.second) }}
+                        {{ form_errors(form.password.second) }}
                     </div>
                     <hr>
                     <div class="form-group tm-text-right text-center mt-5">
                         <button type="submit" class="btn btn-primary">Créer son compte</button>
                     </div>
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

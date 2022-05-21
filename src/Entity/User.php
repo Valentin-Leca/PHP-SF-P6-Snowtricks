@@ -3,37 +3,72 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User
-{
+class User implements UserInterface, PasswordAuthenticatedUserInterface {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $firstname;
+    private ?string $firstname;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $login;
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
+      Assert\NotNull(),
+      Assert\Length(
+          min: 2,
+          max: 25,
+          minMessage: "Votre nom d'utilisateur doit contenir au moins 2 caractères.",
+          maxMessage: "Votre nom d'utilisateur doit avoir moins de 25 caractères.")]
+    private string $login;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $password;
+    #[Assert\Length(
+        min: 6,
+        max: 50,
+        minMessage: "Votre mot de passe doit contenir au moins 6 caractères.",
+        maxMessage: "Votre mot de passe doit avoir moins de 50 caractères."),
+      Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
+      Assert\NotNull()]
+    private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $mail;
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
+      Assert\NotNull()]
+    #[Assert\Email(message: "Veuillez saisir une adresse email valide. Ex : John.Doe@google.com")]
+    private string $mail;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $registratedAt;
+    #[Assert\NotNull()]
+    private \DateTimeImmutable $registratedAt;
 
     #[ORM\Column(type: 'json')]
-    private $role = [];
+    #[Assert\NotNull()]
+    private array $roles = [];
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isAcceptedTerms = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class, orphanRemoval: true)]
+    private ArrayCollection $tricks;
+
+    public function __construct() {
+        $this->registratedAt = new \DateTimeImmutable();
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,14 +147,68 @@ class User
         return $this;
     }
 
-    public function getRole(): ?array
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->roles;
+        $roles[] = "ROLE_USER";
+        return array_unique($roles);
     }
 
-    public function setRole(array $role): self
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->login;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function getIsAcceptedTerms(): ?bool
+    {
+        return $this->isAcceptedTerms;
+    }
+
+    public function setIsAcceptedTerms(bool $isAcceptedTerms): self
+    {
+        $this->isAcceptedTerms = $isAcceptedTerms;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getUser() === $this) {
+                $trick->setUser(null);
+            }
+        }
 
         return $this;
     }
