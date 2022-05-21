@@ -26,13 +26,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?string $firstname;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
-      Assert\NotNull(),
-      Assert\Length(
-          min: 2,
-          max: 25,
-          minMessage: "Votre nom d'utilisateur doit contenir au moins 2 caractères.",
-          maxMessage: "Votre nom d'utilisateur doit avoir moins de 25 caractères.")]
+    #[Assert\Length(
+        min: 2,
+        max: 25,
+        minMessage: "Votre nom d'utilisateur doit contenir au moins 2 caractères.",
+        maxMessage: "Votre nom d'utilisateur doit avoir moins de 25 caractères.")]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
     private string $login;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -40,14 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
         min: 6,
         max: 50,
         minMessage: "Votre mot de passe doit contenir au moins 6 caractères.",
-        maxMessage: "Votre mot de passe doit avoir moins de 50 caractères."),
-      Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
-      Assert\NotNull()]
+        maxMessage: "Votre mot de passe doit avoir moins de 50 caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\NotNull()]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide."),
-      Assert\NotNull()]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\NotNull()]
     #[Assert\Email(message: "Veuillez saisir une adresse email valide. Ex : John.Doe@google.com")]
     private string $mail;
 
