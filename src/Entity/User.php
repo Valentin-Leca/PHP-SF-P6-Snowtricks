@@ -29,9 +29,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Assert\Length(
         min: 2,
         max: 25,
-        minMessage: "Votre nom d'utilisateur doit contenir au moins 2 caractères.",
-        maxMessage: "Votre nom d'utilisateur doit avoir moins de 25 caractères.")]
-    #[Assert\NotNull()]
+        minMessage: "Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Votre nom d'utilisateur doit avoir moins de {{ limit }} caractères.")]
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
     private string $login;
 
@@ -39,15 +39,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Assert\Length(
         min: 6,
         max: 50,
-        minMessage: "Votre mot de passe doit contenir au moins 6 caractères.",
-        maxMessage: "Votre mot de passe doit avoir moins de 50 caractères.")]
+        minMessage: "Votre mot de passe doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Votre mot de passe doit avoir moins de {{ limit }} caractères.")]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
-    #[Assert\NotNull()]
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
-    #[Assert\NotNull()]
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     #[Assert\Email(message: "Veuillez saisir une adresse email valide. Ex : John.Doe@google.com")]
     private string $mail;
 
@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
     private bool $isAcceptedTerms = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class, orphanRemoval: true)]
-    private ArrayCollection $tricks;
+    private Collection $tricks;
 
     public function __construct() {
         $this->registratedAt = new \DateTimeImmutable();
