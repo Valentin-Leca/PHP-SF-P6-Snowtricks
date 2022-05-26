@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -11,13 +12,19 @@ class Media
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $filename;
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom de votre fichier ne peut pas excéder {{ limit }} caractères.")]
+    private string $filename;
 
-    #[ORM\Column(type: 'integer')]
-    private $trickId;
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'media')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Trick $tricks;
 
     public function getId(): ?int
     {
@@ -36,14 +43,14 @@ class Media
         return $this;
     }
 
-    public function getTrickId(): ?int
+    public function getTricks(): ?Trick
     {
-        return $this->trickId;
+        return $this->tricks;
     }
 
-    public function setTrickId(int $trickId): self
+    public function setTricks(?Trick $tricks): self
     {
-        $this->trickId = $trickId;
+        $this->tricks = $tricks;
 
         return $this;
     }

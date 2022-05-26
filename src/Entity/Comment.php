@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -11,19 +12,23 @@ class Comment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $content;
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
+    private string $content;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'integer')]
-    private $trick_id;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $user;
 
-    #[ORM\Column(type: 'integer')]
-    private $user_id;
+    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Trick $trick;
 
     public function getId(): ?int
     {
@@ -54,26 +59,26 @@ class Comment
         return $this;
     }
 
-    public function getTrickId(): ?int
+    public function getUser(): ?User
     {
-        return $this->trick_id;
+        return $this->user;
     }
 
-    public function setTrickId(object $trick_id): self
+    public function setUser(?User $user): self
     {
-        $this->trick_id = $trick_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getTrick(): ?Trick
     {
-        return $this->user_id;
+        return $this->trick;
     }
 
-    public function setUserId(int $user_id): self
+    public function setTrick(?Trick $trick): self
     {
-        $this->user_id = $user_id;
+        $this->trick = $trick;
 
         return $this;
     }

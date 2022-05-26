@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\GroupRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -12,13 +16,20 @@ class Group
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
+    #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
+    private string $name;
 
-    #[ORM\Column(type: 'integer')]
-    private $trickId;
+    #[ORM\OneToMany(mappedBy: 'grouptrick', targetEntity: Trick::class, orphanRemoval: true)]
+    private Collection $tricks;
+
+    #[Pure] public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -37,14 +48,32 @@ class Group
         return $this;
     }
 
-    public function getTrickId(): ?int
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->trickId;
+        return $this->tricks;
     }
 
-    public function setTrickId(int $trickId): self
+    public function addTrick(Trick $trick): self
     {
-        $this->trickId = $trickId;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setGrouptrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getGrouptrick() === $this) {
+                $trick->setGrouptrick(null);
+            }
+        }
 
         return $this;
     }
