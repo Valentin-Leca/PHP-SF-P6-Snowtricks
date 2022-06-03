@@ -35,7 +35,11 @@
                     <div class="form-group tm-text-right text-center mt-5">
                         <button type="submit" class="btn btn-primary">Créer son compte</button>
                     </div>
-                {{ form_end(form) }}
+                    <div class="form-group mt-2 mb-2 text-center">
+                        {% for message in app.flashes('success') %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
             </div>
         </div>
     </div>

@@ -4,21 +4,28 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Service\RegisterMail;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 
 class RegisterController extends AbstractController
 {
+    /**
+     * @throws Exception|TransportExceptionInterface
+     */
     #[Route('/register', name: 'register', methods: ["POST", "GET"])]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface
-    $hasher, MailerInterface $mailer):
-    Response {
+    public function register(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $hasher,
+        RegisterMail $registerMail
+    ): Response {
 
         $user = new User();
 
@@ -28,33 +35,30 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user->setPassword($hasher->hashPassword($user, $form->get('password')->getData()));
-
+            $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
             $user->setRoles(["ROLE_USER"]);
+            $user->setToken(bin2hex(random_bytes(32)));
 
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash(type: "success", message: "Inscription réussie ! Veuillez valider votre compte via le mail d'inscription.");
 
-            // Send email to the new User
+            $registerMail->sendRegisterMail($user);
 
-            $to = $form->get('mail')->getData();
-
-            $email = (new Email())
-                ->from('testmailsymfonymailer@gmail.com')
-                ->to($to)
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('Bienvenue sur Snowtricks !')
-                ->text('Sending emails is fun again!')
-                ->html('<p>See Twig integration for better HTML integration!</p>');
-
-            $mailer->send($email);
         }
 
         return $this->render('register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/verify/{login}/{token}', name: 'verify', methods: ["POST", "GET"])]
+    public function verify(User $user): Response
+    {
+
+        $user->setIsValid(true);
+
+        return $this->render('test.html.twig');
+
     }
 }

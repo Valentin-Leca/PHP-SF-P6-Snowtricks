@@ -30,6 +30,10 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private Trick $trick;
 
+    public function __construct() {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

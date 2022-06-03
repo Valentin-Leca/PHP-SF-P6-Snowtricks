@@ -6,12 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields:["login"], message: "Inscription Impossible ! Ce login existe déjà, veuillez en choisir un autre.")]
+#[UniqueEntity(fields:["mail"], message: "Inscription Impossible ! Cette adresse email existe déjà, veuillez en choisir une autre.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Id]
@@ -67,6 +70,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $token;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isValid = false;
 
     public function __construct() {
         $this->registratedAt = new \DateTimeImmutable();
@@ -243,6 +252,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface {
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function isIsValid(): ?bool
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid(bool $isValid): self
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }
