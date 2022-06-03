@@ -350,6 +350,18 @@
     "symfony/intl": {
         "version": "v6.0.8"
     },
+    "symfony/lock": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "a1c8800e40ae735206bb14586fdd6c4630a51b8d"
+        },
+        "files": [
+            "./config/packages/lock.yaml"
+        ]
+    },
     "symfony/mailer": {
         "version": "6.0",
         "recipe": {
@@ -452,6 +464,9 @@
     "symfony/proxy-manager-bridge": {
         "version": "v6.0.6"
     },
+    "symfony/rate-limiter": {
+        "version": "v6.0.9"
+    },
     "symfony/routing": {
         "version": "6.0",
         "recipe": {
@@ -488,15 +503,6 @@
     },
     "symfony/security-http": {
         "version": "v6.0.8"
-    },
-    "symfony/sendgrid-mailer": {
-        "version": "6.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.4",
-            "ref": "b46e4f8f1adb2864f0aa9c0ff57aea3324a07199"
-        }
     },
     "symfony/serializer": {
         "version": "v6.0.8"
