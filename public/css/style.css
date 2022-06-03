@@ -186,6 +186,11 @@ a:hover { color:#009999; }
     margin-top: 20vh;
 }
 
+.account-activation {
+    margin-top: 20vh;
+    margin-bottom: 20vh
+}
+
 .form-group { margin-bottom: 25px; }
 .tm-btn-big { padding: 12px 90px 14px; }
 
