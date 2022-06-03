@@ -53,22 +53,12 @@ class RegisterController extends AbstractController
     }
 
     #[Route('/verify/{login}/{token}', name: 'verify', methods: ["POST", "GET"])]
-    public function verify(User $user, string $token, EntityManagerInterface $entityManager): Response {
+    public function verify(User $user, EntityManagerInterface $entityManager): Response {
 
-        $tokenInBdd = $user->getToken();
+        $user->setIsValid(true);
+        $user->setToken(null);
+        $entityManager->flush();
 
-        if ($tokenInBdd === $token) {
-            $user->setIsValid(true);
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $isValid = true;
-        } else {
-            $isValid = false;
-        }
-
-        return $this->render('accountIsValid.html.twig', [
-            'isValid' => $isValid
-        ]);
+        return $this->render('accountIsValid.html.twig');
     }
 }
