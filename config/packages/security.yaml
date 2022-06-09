@@ -20,7 +20,7 @@ security:
             provider: app_user_provider
             # configure the maximum login attempts in a custom period of time
             login_throttling:
-                max_attempts: 5
+                max_attempts: 8
                 interval: '15 minutes'
             form_login:
                 # "login" is the name of the route created previously
@@ -29,7 +29,7 @@ security:
                 enable_csrf: true
             remember_me:
                 secret: '%kernel.secret%' # required
-                lifetime: 604800 # 1 week in seconds
+                lifetime: 2419200 # 4 week in seconds
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.
