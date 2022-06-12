@@ -18,6 +18,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            user_checker: App\Security\UserChecker
             # configure the maximum login attempts in a custom period of time
             login_throttling:
                 max_attempts: 8
@@ -29,7 +30,7 @@ security:
                 enable_csrf: true
             remember_me:
                 secret: '%kernel.secret%' # required
-                lifetime: 2419200 # 4 week in seconds
+                lifetime: 604800 # 1 week in seconds
                 # by default, the feature is enabled by checking a
                 # checkbox in the login form (see below), uncomment the
                 # following line to always enable it.

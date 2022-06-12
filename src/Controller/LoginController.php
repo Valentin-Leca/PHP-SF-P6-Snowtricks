@@ -9,19 +9,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController {
 
-    #[Route('/login', name: 'login')]
+    #[Route('/login', name: 'login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-        // TODO dump $lastusername pour voir comment vérifier is_valid en bdd
-
-         return $this->render('login/index.html.twig', [
-             'last_username' => $lastUsername,
-             'error' => $error,
-         ]);
+        return $this->render('login/index.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(), // last username entered by the user
+            'error' => $authenticationUtils->getLastAuthenticationError(), // get the login error if there is one
+        ]);
     }
 
     #[Route('/logout', name: 'logout', methods: ['GET'])]
@@ -29,5 +23,4 @@ class LoginController extends AbstractController {
         // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
-
-  }
+}
