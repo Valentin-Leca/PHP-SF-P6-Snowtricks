@@ -45,7 +45,7 @@ class RegisterType extends AbstractType
                 "second_options" => [
                     'attr' => [
                         'class' => ' form-control rounded-0',
-                        'placeholder' => "Répetez votre mot de passe",
+                        'placeholder' => "Répetez votre mot de passe",0
                     ],
                     "label" => false,
                 ],
