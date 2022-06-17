@@ -18,7 +18,7 @@ class ForgotPasswordMail {
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendForgotPAsswordMail($user): void {
+    public function sendForgotPasswordMail($user): void {
 
         $email = (new TemplatedEmail())
             ->from('testmailsymfonymailer@gmail.com')

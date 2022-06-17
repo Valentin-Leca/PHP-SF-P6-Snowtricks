@@ -33,6 +33,7 @@ class LoginController extends AbstractController {
 
     /**
      * @throws Exception
+     * @throws TransportExceptionInterface
      */
     #[Route('/forgetPassword', name: 'forgetPassword', methods: ['GET', 'POST'])]
     public function forgetPassword(
@@ -40,23 +41,30 @@ class LoginController extends AbstractController {
         EntityManagerInterface $entityManager,
         ForgotPasswordMail $forgotPasswordMail): Response {
 
-        $form = $this->createForm(ForgotPasswordType::class);
+        $request = Request::createFromGlobals();
 
-        $form->handleRequest($request);
+        $userLogin = $request->request->get("login");
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $userRepository = $entityManager->getRepository(User::class);
 
+        $user = $userRepository->findOneBy(['login' => $userLogin]);
 
+        if ($user) {
+
+            $user->setToken(bin2hex(random_bytes(32)));
+            $forgotPasswordMail->sendForgotPasswordMail($user);
             $entityManager->flush();
+
             $this->addFlash(type: "success", message: "Demande de réinitialisation de mot de passe envoyé !");
-
-
-
+        } elseif($user != true) {
+            $this->addFlash(type: "error", message: "Ce login n'est associé à aucun compte utilisateur !");
         }
 
-        return $this->render('login/changePassword.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render('login/changePassword.html.twig');
+    }
+
+    #[Route('/resetPassword/{login}/{token}', name: 'resetPassword', methods: ['GET', 'POST'])]
+    public function resetPassword() {
 
     }
 }
