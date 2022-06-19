@@ -41,13 +41,9 @@ class LoginController extends AbstractController {
         EntityManagerInterface $entityManager,
         ForgotPasswordMail $forgotPasswordMail): Response {
 
-        $request = Request::createFromGlobals();
-
         $userMail = $request->request->get("mail");
 
-        $userRepository = $entityManager->getRepository(User::class);
-
-        $user = $userRepository->findOneBy(['mail' => $userMail]);
+        $user = $entityManager->getRepository(User::class)->findOneBy(['mail' => $userMail]);
 
         if ($user) {
 
@@ -55,38 +51,37 @@ class LoginController extends AbstractController {
             $forgotPasswordMail->sendForgotPasswordMail($user);
             $entityManager->flush();
 
-            $this->addFlash(type: "success", message: "Demande de réinitialisation de mot de passe envoyé !");
-        } elseif($user != true) {
-            $this->addFlash(type: "error", message: "Cette adresse e-mail n'est associé à aucun compte utilisateur !");
+            $this->addFlash(type: "success", message: "Demande de réinitialisation de mot de passe envoyée !");
         }
 
         return $this->render('login/changePassword.html.twig');
     }
 
-    #[Route('/resetPassword/{token}', name: 'resetPassword', methods: ['GET', 'POST'])]
-    public function resetPassword(UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager) {
+    #[Route('/resetPassword/{login}/{token}', name: 'resetPassword', methods: ['GET', 'POST'])]
+    public function resetPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface
+    $entityManager, User $user) {
 
-        $request = Request::createFromGlobals();
+        if ($request->isMethod('POST')) {
 
-        $userLogin = $request->request->get("login");
+            $firstPassword = $request->request->get("password");
+            $secondPassword = $request->request->get("secondPassword");
 
-        $userRepository = $entityManager->getRepository(User::class);
-
-        $user = $userRepository->findOneBy(['login' => $userLogin]);
-        $firstPassword = $request->request->get("password");
-        $secondPassword = $request->request->get("secondPassword");
-
-
-        if ($user && $firstPassword === $secondPassword) {
-            $user->setToken(null);
-            $user->setPassword($hasher->hashPassword($user, $firstPassword));
-            $entityManager->flush();
-            $this->redirectToRoute('login');
-            $this->addFlash(type: "error", message: "Bravo !");
-        } else {
-            $this->addFlash(type: "error", message: "Ce login n'est associé à aucun compte utilisateur !");
+            if ($firstPassword === $secondPassword) {
+                $user->setToken(null);
+                $user->setPassword($hasher->hashPassword($user, $firstPassword));
+                $entityManager->flush();
+                $this->addFlash(type: "success", message: "Votre mot de passe a bien été modifié !");
+                return $this->redirectToRoute('login');
+            } else {
+                $this->addFlash(type: "error", message: "Vos deux mots de passes ne sont pas identiques !");
+                return $this->redirectToRoute('resetPassword', ['login' => $user->getLogin(),
+                    'token' => $user->getToken
+                ()]);
+            }
         }
 
-        return $this->render("login/resetPassword.html.twig");
+        return $this->render("login/resetPassword.html.twig", [
+            'user' => $user,
+        ]);
     }
 }

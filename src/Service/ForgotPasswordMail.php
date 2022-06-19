@@ -26,10 +26,7 @@ class ForgotPasswordMail {
             ->subject('Snowtricks - Réinitialisation de mot de passe !')
             ->text('Sending emails is fun again!')
             ->htmlTemplate('emails/forgotPassword.html.twig')
-            ->context(['mailAdress' => $user->getMail(),
-                'login' => $user->getLogin(),
-                'token' => $user->getToken(),
-            ]);
+            ->context(['user' => $user]);
 
         $this->mailer->send($email);
     }
