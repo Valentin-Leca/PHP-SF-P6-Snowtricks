@@ -44,7 +44,11 @@
                         <a class="nav-link nav-link-2" href="videos.html">Figures</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-3" href="{{ path('register') }}">S'inscrire</a>
+                        {% if app.user %}
+                            <a class="nav-link nav-link-3" href="{{ path('app_user_edit', {id : app.user.id}) }}">Mon profil</a>
+                        {% else %}
+                            <a class="nav-link nav-link-3" href="{{ path('register') }}">S'inscrire</a>
+                        {% endif %}
                     </li>
                     <li class="nav-item">
                         {% if app.user %}

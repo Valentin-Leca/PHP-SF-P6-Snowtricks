@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid tm-mt-60">
+        <div class="row tm-mb-50 log-body">
+            <div class="col-lg-4 offset-4 col-12 mb-5">
+                <h2 class="tm-text-primary text-center mb-5">Modifier mon profil</h2>
+                {{ form_start(form, {
+                    'attr': {
+                        'class': 'tm-contact-form mx-auto',
+                        'id': 'register-form',
+                    }
+                }) }}
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.firstname) }}
+                    {{ form_errors(form.firstname) }}
+                </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.password.first) }}
+                    {{ form_errors(form.password.first) }}
+                </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.password.second) }}
+                    {{ form_errors(form.password.second) }}
+                </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.mail) }}
+                    {{ form_errors(form.mail) }}
+                </div>
+                {{ form_rest(form) }}
+                <hr>
+                <div class="form-group tm-text-right text-center mt-5">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+                <div class="form-group mt-2 mb-2 text-center">
+                    {% for message in app.flashes('success') %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
