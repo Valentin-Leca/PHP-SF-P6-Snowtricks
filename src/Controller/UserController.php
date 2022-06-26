@@ -5,24 +5,40 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/user')]
 class UserController extends AbstractController {
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response {
+    public function edit(
+        Request $request,
+        User $user,
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $hasher,): Response {
 
-        $this->denyAccessUnlessGranted(['POST_EDIT', 'POST_VIEW'], $user);
+        $this->denyAccessUnlessGranted('POST_VIEW', $user);
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+
+            if (!empty($form->getData()['password'])) {
+                $user->setPassword($hasher->hashPassword($user, $form->getData()['password']));
+            }
+
+            $user->setName($form->getData()['name']);
+            $user->setFirstname($form->getData()['firstname']);
+            $user->setMail($form->getData()['mail']);
+            $entityManager->flush($user);
+            $this->addFlash("success", "Votre profil a bien été mis à jour !");
 
             //TODO parler du redirect avec Thibaut
             return $this->redirectToRoute('app_user_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);

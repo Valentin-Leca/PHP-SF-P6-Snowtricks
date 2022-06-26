@@ -30,7 +30,7 @@ class UserVoter extends Voter {
         switch ($attribute) {
             case self::VIEW:
             case self::EDIT:
-                if ($user === $subject->getId()) {
+                if ($user->getId() === $subject->getId()) {
                     return true;
                 }
                 break;

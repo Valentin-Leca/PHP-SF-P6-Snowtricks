@@ -4,8 +4,11 @@
 
     <div class="container-fluid tm-mt-60">
         <div class="row tm-mb-50 log-body">
-            <div class="col-lg-4 offset-4 col-12 mb-5">
-                <h2 class="tm-text-primary text-center mb-5">Modifier mon profil</h2>
+            <div class="col-lg-4 offset-4 col-12 mb-5 text-center">
+                <h2 class="tm-text-primary mb-5">Modifier mon profil</h2>
+                {% for message in app.flashes('success') %}
+                    {{ message }}
+                {% endfor %}
                 {{ form_start(form, {
                     'attr': {
                         'class': 'tm-contact-form mx-auto',
@@ -13,12 +16,20 @@
                     }
                 }) }}
                 <div class="form-group mt-2 mb-2">
-                    {{ form_widget(form.name) }}
+                    {{ form_widget(form.name, {
+                        'attr': {
+                        'value': user.name,
+                        }
+                    }) }}
                     {{ form_errors(form.name) }}
                 </div>
                 <hr>
                 <div class="form-group mt-2 mb-2">
-                    {{ form_widget(form.firstname) }}
+                    {{ form_widget(form.firstname, {
+                        'attr': {
+                            'value': user.firstname,
+                        }
+                    }) }}
                     {{ form_errors(form.firstname) }}
                 </div>
                 <hr>
@@ -33,7 +44,11 @@
                 </div>
                 <hr>
                 <div class="form-group mt-2 mb-2">
-                    {{ form_widget(form.mail) }}
+                    {{ form_widget(form.mail, {
+                        'attr': {
+                            'value': user.mail,
+                        }
+                    }) }}
                     {{ form_errors(form.mail) }}
                 </div>
                 {{ form_rest(form) }}

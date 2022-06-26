@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,14 +22,16 @@ class UserType extends AbstractType
             ->add('name', TextType::class, [
                 'attr' => [
                     'class' =>'form-control rounded-0',
-                    'placeholder' => 'Votre nom'
+                    'placeholder' => 'Votre nom',
                 ],
+                'required' => false,
             ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' =>'form-control rounded-0',
-                    'placeholder' => 'Votre prénom'
+                    'placeholder' => 'Votre prénom',
                 ],
+                'required' => false,
             ])
             ->add('password', RepeatedType::class, [
                 "type" => PasswordType::class,
@@ -39,6 +42,7 @@ class UserType extends AbstractType
                         'class' => 'password-field',
                     ]
                 ],
+                'required' => false,
                 "first_options" => [
                     'attr' => [
                         'class' => ' form-control rounded-0',
@@ -59,14 +63,18 @@ class UserType extends AbstractType
                     'class' => 'form-control rounded-0',
                     'placeholder' => "Email",
                 ],
+                'required' => true,
+                "constraints" => [
+                    new Email(['message' => "Veuillez saisir une adresse email valide. Ex : John.Doe@google.com"]),
+                ]
             ])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+//    public function configureOptions(OptionsResolver $resolver): void
+//    {
+//        $resolver->setDefaults([
+//            'data_class' => User::class,
+//        ]);
+//    }
 }
