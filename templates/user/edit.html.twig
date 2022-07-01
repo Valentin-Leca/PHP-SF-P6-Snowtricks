@@ -51,6 +51,12 @@
                     }) }}
                     {{ form_errors(form.mail) }}
                 </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.avatar) }}
+                    <img src ="{{ asset('assets/img/avatar-1.png') }}" />
+                    {{ form_errors(form.avatar) }}
+                </div>
                 {{ form_rest(form) }}
                 <hr>
                 <div class="form-group tm-text-right text-center mt-5">
