@@ -52,11 +52,14 @@
                     {{ form_errors(form.mail) }}
                 </div>
                 <hr>
-                <div class="form-group mt-2 mb-2">
-                    {{ form_widget(form.avatar) }}
-                    <img src ="{{ asset('assets/img/avatar-1.png') }}" />
-                    {{ form_errors(form.avatar) }}
-                </div>
+                <p>Choisissez votre avatar :</p>
+                {% for key, child in form.avatar %}
+                    <div class="form-group mt-2 mb-2">
+                        <img src="{{ asset("assets/img/avatar-"~key~".png") }}" alt="test">
+                        {{ form_widget(child) }}
+                        {{ form_errors(child) }}
+                    </div>
+                {% endfor %}
                 {{ form_rest(form) }}
                 <hr>
                 <div class="form-group tm-text-right text-center mt-5">

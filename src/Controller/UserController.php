@@ -37,6 +37,7 @@ class UserController extends AbstractController {
             $user->setName($form->getData()['name']);
             $user->setFirstname($form->getData()['firstname']);
             $user->setMail($form->getData()['mail']);
+            $user->setAvatar($form->getData()['avatar']);
             $entityManager->flush($user);
             $this->addFlash("success", "Votre profil a bien été mis à jour !");
 

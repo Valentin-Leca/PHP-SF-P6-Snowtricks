@@ -72,14 +72,16 @@ class UserType extends AbstractType
             ])
             ->add('avatar', ChoiceType::class, [
                 'choices' => [
-                    '1' => 1,
-                    '2' => 2,
-                    '3' => 3,
+                    '1' => "avatar-1",
+                    '2' => "avatar-2",
+                    '3' => "avatar-3",
+                    '4' => "avatar-4",
+                    '5' => "avatar-5",
+                    '6' => "avatar-6",
                 ],
                 'attr' => [
                     'class' => 'form-control rounded-0',
                 ],
-                'required' => false,
                 'expanded' => true,
                 'multiple' => false,
             ])
