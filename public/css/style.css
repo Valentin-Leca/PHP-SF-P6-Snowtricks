@@ -167,6 +167,16 @@ a:hover { color:#009999; }
     background-color:#086969;
 }
 
+#trick_grouptrick {
+    width: 125px;
+    color: black !important;
+}
+
+.label_trick_grouptrick {
+    color: #009999 !important;
+    margin-right: 10px;
+}
+
 .btn-primary.disabled, 
 .btn-primary:disabled {
     background-color: #009999;

@@ -16,6 +16,7 @@ class TrickController extends AbstractController {
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response {
 
+        // TODO bouger le trickrepository->findAll() dans le homeCOntroller
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findBy(['user' => $this->getUser()]),
         ]);
@@ -23,8 +24,6 @@ class TrickController extends AbstractController {
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TrickRepository $trickRepository): Response {
-
-        $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);

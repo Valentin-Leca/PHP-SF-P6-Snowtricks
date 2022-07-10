@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('home') }}">
+            <i class="fa-solid fa-person-snowboarding mr-2"></i>
+            SnowTricks
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-1" aria-current="page" href="{{ path('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-2" href="{{ path("app_trick_new") }}">Figures</a>
+                </li>
+                <li class="nav-item">
+                    {% if app.user %}
+                        <a class="nav-link nav-link-3" href="{{ path('app_user_edit', {id : app.user.id}) }}">Mon profil</a>
+                    {% else %}
+                        <a class="nav-link nav-link-3" href="{{ path('register') }}">S'inscrire</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if app.user %}
+                        <a class="nav-link nav-link-4" href="{{ path('logout') }}">Se Déconnecter</a>
+                    {% else %}
+                        <a class="nav-link nav-link-4" href="{{ path('login') }}">Se connecter</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
