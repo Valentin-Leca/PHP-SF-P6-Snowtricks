@@ -17,12 +17,14 @@ class TrickController extends AbstractController {
     public function index(TrickRepository $trickRepository): Response {
 
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $trickRepository->findBy(['user' => $this->getUser()]),
         ]);
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TrickRepository $trickRepository): Response {
+
+        $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -51,6 +53,8 @@ class TrickController extends AbstractController {
 
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response {
+
+        $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
