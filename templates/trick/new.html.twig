@@ -1,11 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
-
 {% block body %}
-    <h1>Create new Trick</h1>
 
-    {{ include('trick/_form.html.twig') }}
+    <div class="container-fluid tm-mt-60">
+        <div class="row tm-mb-50 log-body">
+            <div class="col-lg-4 offset-4 col-12 mb-5 text-center">
+                <h2 class="tm-text-primary mt-5 mb-5">Création de votre figure</h2>
+                {% for message in app.flashes('success') %}
+                    {{ message }}
+                {% endfor %}
+                {{ form_start(form, {
+                    'attr': {
+                        'class': 'tm-contact-form mx-auto',
+                        'id': 'register-form',
+                    }
+                }) }}
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+                <hr>
+                <div class="form-group mt-2 mb-2">
+                    {{ form_widget(form.content) }}
+                    {{ form_errors(form.content) }}
+                </div>
+                <hr>
+                {{ form_rest(form) }}
+                <hr>
+                <div class="form-group tm-text-right text-center mt-5">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+                <div class="form-group mt-2 mb-2 text-center">
+                    {% for message in app.flashes('success') %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_trick_index') }}">back to list</a>
+
 {% endblock %}
