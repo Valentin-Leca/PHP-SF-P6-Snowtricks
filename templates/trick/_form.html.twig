@@ -14,7 +14,32 @@
         {{ form_errors(form.content) }}
     </div>
 <hr>
-{{ form_rest(form) }}
+    <div class="form-group mt-2 mb-2">
+
+        {# store the prototype on the data-prototype attribute #}
+        <ul id="media-fields-list"
+            data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form.media|length }}">
+            {% for mediaField in form.media %}
+                <li>
+                    {{ form_widget(mediaField) }}
+                    {{ form_errors(mediaField) }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <button type="button" class="add-another-collection-widget" data-list-selector="#media-fields-list">
+            Ajouter un média
+        </button>
+
+    </div>
+<hr>
+    <div class="form-group mt-2 mb-2">
+        {{ form_label(form.grouptrick) }}
+        {{ form_widget(form.grouptrick) }}
+        {{ form_errors(form.grouptrick) }}
+    </div>
 <hr>
     <div class="form-group tm-text-right text-center mt-5">
         <button type="submit" class="btn btn-primary">Valider</button>
