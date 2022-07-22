@@ -23,8 +23,8 @@
             data-widget-counter="{{ form.media|length }}">
             {% for mediaField in form.media %}
                 <li>
-                    {{ form_widget(mediaField) }}
-                    {{ form_errors(mediaField) }}
+                    {{ form_widget(form.image) }}
+                    {{ form_errors(form.image) }}
                 </li>
             {% endfor %}
         </ul>

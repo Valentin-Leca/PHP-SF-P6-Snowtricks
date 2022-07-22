@@ -30,6 +30,7 @@ class TrickController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($form['image']->getData());
             $trick->setUser($this->getUser());
             $trickRepository->add($trick, true);
 

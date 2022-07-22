@@ -552,6 +552,10 @@ select:not([multiple]) {
     width:100%;
 }
 
+/*#media-fields-list li {*/
+/*    display: none!important;*/
+/*}*/
+
 .tm-contact-form { max-width: 420px; }
 .tm-address-col { max-width: 520px; }
 .tm-contacts { padding-left: 0; }
