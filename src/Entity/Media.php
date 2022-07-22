@@ -22,7 +22,7 @@ class Media
         maxMessage: "Le nom de votre fichier ne peut pas excéder {{ limit }} caractères.")]
     private string $filename;
 
-    #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'media')]
+    #[ORM\ManyToOne(targetEntity: Trick::class, cascade: ["persist"], inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: false)]
     private Trick $tricks;
 

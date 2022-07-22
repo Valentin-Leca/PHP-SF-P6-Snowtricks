@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\Trick;
 use App\Form\TrickType;
+use App\Repository\MediaRepository;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/trick')]
 class TrickController extends AbstractController {
@@ -23,16 +27,43 @@ class TrickController extends AbstractController {
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, TrickRepository $trickRepository): Response {
+    public function new(Request $request, TrickRepository $trickRepository, MediaRepository $mediaRepository,
+                        SluggerInterface $slugger): Response {
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form['image']->getData());
+
+            // à mettre dans un service
+
+            $image = $form->get('image')->getData();
+
+            if ($image) {
+                $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$image->guessExtension();
+
+                try {
+                    $image->move($this->getParameter('images_directory'), $newFileName);
+                } catch (FileException $e) {
+                    dump($e);
+                }
+
+                $media = (new Media())
+                    ->setTricks($trick)
+                    ->setFilename($newFileName);
+                $mediaRepository->add($media, true);
+
+            }
+
+            // à mettre dans un service
+
             $trick->setUser($this->getUser());
             $trickRepository->add($trick, true);
+
+            // TODO mettre le service ici
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
