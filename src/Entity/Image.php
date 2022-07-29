@@ -14,11 +14,11 @@ class Image
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $imagename;
+    private ?string $imagename;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
-    private $tricks_id;
+    private ?Trick $tricks_id;
 
     public function getId(): ?int
     {

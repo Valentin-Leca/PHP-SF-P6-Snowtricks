@@ -42,6 +42,18 @@ class TrickType extends AbstractType
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Ajoutez votre image',
                 ],
+                'by_reference' => false,
+                'mapped' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('video', CollectionType::class, [
+                'entry_type' => VideoType::class,
+                'attr' => [
+                    'class' =>'form-control rounded-0',
+                    'placeholder' => 'Ajoutez votre vidéo',
+                ],
+                'mapped' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
             ])

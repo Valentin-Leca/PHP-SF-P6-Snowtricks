@@ -14,11 +14,11 @@ class Video
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $videoname;
+    private ?string $videoname;
 
     #[ORM\ManyToOne(targetEntity: trick::class, inversedBy: 'videos')]
     #[ORM\JoinColumn(nullable: false)]
-    private $trick_id;
+    private ?trick $trick_id;
 
     public function getId(): ?int
     {

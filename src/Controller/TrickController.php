@@ -32,9 +32,10 @@ class TrickController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $images = $form->get('media')->getData();
+            $images = $form->get('image')->getData();
+            $videos = $form->get('video')->getData();
 
-            $uploadFile->uploadFiles($images, $trick);
+            $uploadFile->uploadFiles($images, $videos, $trick);
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }

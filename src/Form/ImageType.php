@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\File;
 
 class ImageType extends AbstractType
 {
@@ -16,6 +16,7 @@ class ImageType extends AbstractType
         $builder
             ->add('imagename', FileType::class, [
                 'label' => false,
+                'mapped' => false,
 
                 // make it optional so you don't have to re-upload the PDF file
                 // every time you edit the Product details
@@ -24,7 +25,7 @@ class ImageType extends AbstractType
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
-                    new Image([
+                    new File([
                         'maxSize' => '2M',
                         'mimeTypes' => [
                             'image/png',
@@ -34,20 +35,13 @@ class ImageType extends AbstractType
                     ])
                 ],
             ])
-//            ->add('videoname', TextType::class, [
-//                'label' => false,
-//                'attr' => [
-//                    'class' =>'form-control rounded-0',
-//                    'placeholder' => 'Lien de votre vidéo (youtube)',
-//                ],
-//            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => \App\Entity\Image::class,
+//            'data_class' => Image::class,
         ]);
     }
 }

@@ -17,7 +17,7 @@
     <div class="form-group mt-2 mb-2">
 
         {# store the prototype on the data-prototype attribute #}
-        <ul id="media-fields-list"
+        <ul id="media-fields-list-image"
             data-prototype="{{ form_widget(form.image.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
             data-widget-counter="{{ form.image|length }}">
@@ -29,8 +29,29 @@
             {% endfor %}
         </ul>
 
-        <button type="button" class="add-another-collection-widget" data-list-selector="#media-fields-list">
-            Ajouter un média
+        <button type="button" class="add-another-collection-widget-image" data-list-selector="#media-fields-list-image">
+            Ajouter une image
+        </button>
+
+    </div>
+<hr>
+    <div class="form-group mt-2 mb-2">
+
+        {# store the prototype on the data-prototype attribute #}
+        <ul id="media-fields-list-video"
+            data-prototype="{{ form_widget(form.video.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form.video|length }}">
+            {% for videoField in form.video %}
+                <li>
+                    {{ form_widget(form.videoField) }}
+                    {{ form_errors(form.videoField) }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <button type="button" class="add-another-collection-widget-video" data-list-selector="#media-fields-list-video">
+            Ajouter une vidéo
         </button>
 
     </div>

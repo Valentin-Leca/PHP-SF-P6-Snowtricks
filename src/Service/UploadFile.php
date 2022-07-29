@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\Image;
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -34,22 +36,21 @@ class UploadFile {
             }
     }
 
-    public function uploadFiles($medias, Trick $trick) {
+    public function uploadFiles($images, $videos, Trick $trick) {
 
-        foreach ($medias as $media) {
+        foreach ($images as $image) {
 
-            $this->upload($media);
-            $trick->addMedium($media);
-            $this->entityManager->persist($media);
-            $this->entityManager->flush();
+            $this->upload($image);
 
-
-
+            $trick->addImage($image);
+            $this->entityManager->persist($trick);
         }
 
-    }
+        foreach ($videos as $video) {
 
-//    public function getTargetDirectory() {
-//        return $this->targetDirectory;
-//    }
+            $trick->addVideo($video);
+            $this->entityManager->persist($trick);
+        }
+        $this->entityManager->flush();
+    }
 }
