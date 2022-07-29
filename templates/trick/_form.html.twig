@@ -18,13 +18,13 @@
 
         {# store the prototype on the data-prototype attribute #}
         <ul id="media-fields-list"
-            data-prototype="{{ form_widget(form.media.vars.prototype)|e }}"
+            data-prototype="{{ form_widget(form.image.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.media|length }}">
-            {% for mediaField in form.media %}
+            data-widget-counter="{{ form.image|length }}">
+            {% for imageField in form.image %}
                 <li>
-                    {{ form_widget(form.image) }}
-                    {{ form_errors(form.image) }}
+                    {{ form_widget(form.imageField) }}
+                    {{ form_errors(form.imageField) }}
                 </li>
             {% endfor %}
         </ul>
