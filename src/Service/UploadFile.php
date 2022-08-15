@@ -31,6 +31,7 @@ class UploadFile {
 
             try {
                 $file->move($this->targetDirectory, $fileName);
+                // TODO SETTER l'image name modifiée IMPORTANT !!!!!!!!!!!!!!!
             } catch (FileException $e) {
                 return $e->getMessage();
             }

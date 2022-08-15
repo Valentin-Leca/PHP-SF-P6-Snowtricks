@@ -49,10 +49,10 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'tricks_id', targetEntity: Image::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tricks_id', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $videos;
 
     #[Pure] public function __construct()

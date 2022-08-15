@@ -14,7 +14,7 @@ class Image
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $imagename;
+    private $imagename;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
@@ -25,7 +25,7 @@ class Image
         return $this->id;
     }
 
-    public function getImagename(): ?string
+    public function getImagename()
     {
         return $this->imagename;
     }

@@ -18,10 +18,10 @@
 
         {# store the prototype on the data-prototype attribute #}
         <ul id="media-fields-list-image"
-            data-prototype="{{ form_widget(form.image.vars.prototype)|e }}"
+            data-prototype="{{ form_widget(form.images.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.image|length }}">
-            {% for imageField in form.image %}
+            data-widget-counter="{{ form.images|length }}">
+            {% for imageField in form.images %}
                 <li>
                     {{ form_widget(form.imageField) }}
                     {{ form_errors(form.imageField) }}
@@ -39,10 +39,10 @@
 
         {# store the prototype on the data-prototype attribute #}
         <ul id="media-fields-list-video"
-            data-prototype="{{ form_widget(form.video.vars.prototype)|e }}"
+            data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.video|length }}">
-            {% for videoField in form.video %}
+            data-widget-counter="{{ form.videos|length }}">
+            {% for videoField in form.videos %}
                 <li>
                     {{ form_widget(form.videoField) }}
                     {{ form_errors(form.videoField) }}

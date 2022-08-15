@@ -16,14 +16,7 @@ class ImageType extends AbstractType
         $builder
             ->add('imagename', FileType::class, [
                 'label' => false,
-                'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
@@ -41,7 +34,7 @@ class ImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-//            'data_class' => Image::class,
+            'data_class' => Image::class,
         ]);
     }
 }
