@@ -30,7 +30,7 @@ class Image
         return $this->imagename;
     }
 
-    public function setImagename(string $imagename): self
+    public function setImagename($imagename): self
     {
         $this->imagename = $imagename;
 

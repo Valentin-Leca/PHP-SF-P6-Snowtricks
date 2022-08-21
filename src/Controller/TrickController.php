@@ -24,7 +24,7 @@ class TrickController extends AbstractController {
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UploadFile $uploadFile): Response {
+    public function new(Request $request, UploadFile $uploadFile, TrickRepository $trickRepository): Response {
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -32,10 +32,10 @@ class TrickController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $images = $form->get('image')->getData();
-            $videos = $form->get('video')->getData();
+            $trick->setUser($this->getUser());
+            $uploadFile->uploadFiles($trick);
 
-            $uploadFile->uploadFiles($images, $videos, $trick);
+            $trickRepository->add($trick, true);
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }

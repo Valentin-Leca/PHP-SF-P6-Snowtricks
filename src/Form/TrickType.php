@@ -36,7 +36,7 @@ class TrickType extends AbstractType
                 ],
                 'label' => "Catégorie",
             ])
-            ->add('image', CollectionType::class, [
+            ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,
                 'attr' => [
                     'class' =>'form-control rounded-0',
@@ -46,7 +46,7 @@ class TrickType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
-            ->add('video', CollectionType::class, [
+            ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,
                 'attr' => [
                     'class' =>'form-control rounded-0',

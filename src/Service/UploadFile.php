@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Image;
 use App\Entity\Trick;
-use App\Entity\Video;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -28,7 +26,6 @@ class UploadFile {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
             try {
                 $file->move($this->targetDirectory, $fileName);
                 // TODO SETTER l'image name modifiée IMPORTANT !!!!!!!!!!!!!!!
@@ -37,21 +34,24 @@ class UploadFile {
             }
     }
 
-    public function uploadFiles($images, $videos, Trick $trick) {
+    public function videoId() {
+        // TODO utiliser parse_url / parse_str pour récupérer paramètre "v" de l'url d'une vidéo youtube
+    }
 
-        foreach ($images as $image) {
+    public function uploadFiles(Trick $trick) {
 
-            $this->upload($image);
+        foreach ($trick->getImages()->getValues() as $image) {
+
+            $this->upload($image->getImagename());
 
             $trick->addImage($image);
-            $this->entityManager->persist($trick);
         }
 
-        foreach ($videos as $video) {
+        foreach ($trick->getVideos() as $video) {
+
+            // TODO utiliser méthode videoId pour getVideoname()
 
             $trick->addVideo($video);
-            $this->entityManager->persist($trick);
         }
-        $this->entityManager->flush();
     }
 }
