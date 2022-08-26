@@ -3,7 +3,10 @@
 namespace App\Service;
 
 use App\Entity\Trick;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Video;
+
+use http\Exception\BadUrlException;
+use PharIo\Manifest\InvalidUrlException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -12,44 +15,51 @@ class UploadFile {
 
     private string $targetDirectory;
     private SluggerInterface $slugger;
-    private EntityManagerInterface $entityManager;
 
-    public function __construct($targetDirectory, SluggerInterface $slugger, EntityManagerInterface $entityManager) {
+    public function __construct($targetDirectory, SluggerInterface $slugger) {
 
         $this->targetDirectory = $targetDirectory;
         $this->slugger = $slugger;
-        $this->entityManager = $entityManager;
     }
 
-    public function upload(UploadedFile $file) {
+    public function upload(UploadedFile $file, $image) {
 
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
             try {
                 $file->move($this->targetDirectory, $fileName);
-                // TODO SETTER l'image name modifiée IMPORTANT !!!!!!!!!!!!!!!
+                $image->setImagename($fileName);
             } catch (FileException $e) {
                 return $e->getMessage();
             }
     }
 
-    public function videoId() {
-        // TODO utiliser parse_url / parse_str pour récupérer paramètre "v" de l'url d'une vidéo youtube
+    public function videoId(Video $video) {
+
+        parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
+
+        if (isset($videoId)) {
+            try {
+                $video->setVideoname($videoId['v']);
+            } catch (BadUrlException $e) {
+                return $e->getMessage();
+            }
+        }
     }
 
     public function uploadFiles(Trick $trick) {
 
         foreach ($trick->getImages()->getValues() as $image) {
 
-            $this->upload($image->getImagename());
+            $this->upload($image->getImagename(), $image);
 
             $trick->addImage($image);
         }
 
-        foreach ($trick->getVideos() as $video) {
+        foreach ($trick->getVideos()->getValues() as $video) {
 
-            // TODO utiliser méthode videoId pour getVideoname()
+            $this->videoId($video);
 
             $trick->addVideo($video);
         }
