@@ -4,9 +4,6 @@ namespace App\Service;
 
 use App\Entity\Trick;
 use App\Entity\Video;
-
-use http\Exception\BadUrlException;
-use PharIo\Manifest\InvalidUrlException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -39,10 +36,10 @@ class UploadFile {
 
         parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
 
-        if (isset($videoId)) {
+        if (isset($videoId['v'])) {
             try {
                 $video->setVideoname($videoId['v']);
-            } catch (BadUrlException $e) {
+            } catch (Exception $e) {
                 return $e->getMessage();
             }
         }
@@ -57,11 +54,17 @@ class UploadFile {
             $trick->addImage($image);
         }
 
-        foreach ($trick->getVideos()->getValues() as $video) {
+        foreach ($trick->getVideos() as $video) {
 
-            $this->videoId($video);
+            $check = parse_url($video->getVideoname(), PHP_URL_HOST);
 
-            $trick->addVideo($video);
+            if ($check == "youtube.com") {
+                $this->videoId($video);
+
+                $trick->addVideo($video);
+            } else {
+                break;
+            }
         }
     }
 }

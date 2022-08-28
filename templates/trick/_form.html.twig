@@ -22,8 +22,9 @@
             data-widget-tags="{{ '<li></li>'|e }}"
             data-widget-counter="{{ form.images|length }}">
             {% for imageField in form.images %}
+                {{ dump(imageField) }}
                 <li>
-                    {{ form_widget(form.imageField) }}
+                    {{ form_widget(form.imageField, { 'value':form.images.value }) }}
                     {{ form_errors(form.imageField) }}
                 </li>
             {% endfor %}

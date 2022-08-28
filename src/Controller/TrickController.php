@@ -55,7 +55,8 @@ class TrickController extends AbstractController {
     }
 
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response {
+    public function edit(Request $request, UploadFile $uploadFile, Trick $trick, TrickRepository $trickRepository):
+    Response {
 
         $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
 
@@ -63,6 +64,8 @@ class TrickController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $uploadFile->uploadFiles($trick);
             $trickRepository->add($trick, true);
 
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
