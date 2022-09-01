@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Trick;
 use App\Entity\Video;
+use Exception;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -19,7 +20,7 @@ class UploadFile {
         $this->slugger = $slugger;
     }
 
-    public function upload(UploadedFile $file, $image) {
+    public function renameImage(UploadedFile $file, $image) {
 
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
@@ -45,25 +46,26 @@ class UploadFile {
         }
     }
 
-    public function uploadFiles(Trick $trick) {
+    public function uploadImage(Trick $trick) {
 
         foreach ($trick->getImages()->getValues() as $image) {
 
-            $this->upload($image->getImagename(), $image);
+            $this->renameImage($image->getImagename(), $image);
 
             $trick->addImage($image);
         }
+    }
 
+    public function uploadVideo(Trick $trick) {
         foreach ($trick->getVideos() as $video) {
 
             $check = parse_url($video->getVideoname(), PHP_URL_HOST);
 
-            if ($check == "youtube.com") {
+            if ($check == "www.youtube.com") {
                 $this->videoId($video);
-
                 $trick->addVideo($video);
             } else {
-                break;
+                return false;
             }
         }
     }

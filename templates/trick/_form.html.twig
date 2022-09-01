@@ -22,9 +22,8 @@
             data-widget-tags="{{ '<li></li>'|e }}"
             data-widget-counter="{{ form.images|length }}">
             {% for imageField in form.images %}
-                {{ dump(imageField) }}
                 <li>
-                    {{ form_widget(form.imageField, { 'value':form.images.value }) }}
+                    {{ form_widget(form.imageField) }}
                     {{ form_errors(form.imageField) }}
                 </li>
             {% endfor %}
@@ -63,6 +62,11 @@
         {{ form_errors(form.grouptrick) }}
     </div>
 <hr>
+        {% for message in app.flashes('error') %}
+            <div class="form-group mt-2 mb-2 text-center error-msg">
+                {{ message }}
+            </div>
+        {% endfor %}
     <div class="form-group tm-text-right text-center mt-5">
         <button type="submit" class="btn btn-primary">Valider</button>
     </div>
