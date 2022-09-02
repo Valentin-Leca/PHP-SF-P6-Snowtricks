@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Form\TrickType;
-use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,13 +33,13 @@ class TrickController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
 
             $trick->setUser($this->getUser());
-            $uploadFile->uploadImage($trick);
-            $uploadFile->uploadVideo($trick);
 
-            if ($uploadFile->uploadVideo($trick) == false) {
+            if ($uploadFile->uploadVideo($trick) === false) {
                 $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
                 return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
             } else {
+                $uploadFile->uploadImage($trick);
+                $uploadFile->uploadVideo($trick);
                 $trickRepository->add($trick, true);
 
                 return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
@@ -62,12 +61,10 @@ class TrickController extends AbstractController {
     }
 
     #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UploadFile $uploadFile, Trick $trick, TrickRepository $trickRepository,
-                         ImageRepository $imageRepository):
-    Response {
+    public function edit(Request $request, UploadFile $uploadFile, Trick $trick, TrickRepository $trickRepository): Response {
 
         $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
-        $form = $this->createForm(TrickType::class, $trick, ['images' => $images]);
+        $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

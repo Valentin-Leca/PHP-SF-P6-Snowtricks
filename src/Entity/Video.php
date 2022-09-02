@@ -20,6 +20,9 @@ class Video
     #[ORM\JoinColumn(nullable: false)]
     private ?trick $trick_id;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $url;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Video
     public function setTrickId(?trick $trick_id): self
     {
         $this->trick_id = $trick_id;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

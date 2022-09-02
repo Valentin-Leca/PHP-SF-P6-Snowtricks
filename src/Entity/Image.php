@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -20,12 +21,14 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $tricks_id;
 
+    private $file = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getImagename()
+    public function getImagename(): ?string
     {
         return $this->imagename;
     }
@@ -45,6 +48,18 @@ class Image
     public function setTricksId(?Trick $tricks_id): self
     {
         $this->tricks_id = $tricks_id;
+
+        return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

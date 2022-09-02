@@ -23,7 +23,7 @@
             data-widget-counter="{{ form.images|length }}">
             {% for imageField in form.images %}
                 <li>
-                    {{ form_widget(form.imageField) }}
+                    {{ form_widget(form.imageField, {form: imageField}) }}
                     {{ form_errors(form.imageField) }}
                 </li>
             {% endfor %}
@@ -44,7 +44,7 @@
             data-widget-counter="{{ form.videos|length }}">
             {% for videoField in form.videos %}
                 <li>
-                    {{ form_widget(form.videoField) }}
+                    {{ form_widget(form.videoField, {form: videoField}) }}
                     {{ form_errors(form.videoField) }}
                 </li>
             {% endfor %}

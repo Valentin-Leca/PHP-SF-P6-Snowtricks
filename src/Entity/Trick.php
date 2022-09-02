@@ -46,7 +46,7 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private Group $grouptrick;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'tricks_id', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]

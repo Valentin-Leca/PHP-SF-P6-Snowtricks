@@ -43,10 +43,9 @@ class TrickType extends AbstractType
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Ajoutez votre image',
                 ],
-                'by_reference' => true,
+                'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'data' => $options['images'],
             ])
             ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,
@@ -54,10 +53,9 @@ class TrickType extends AbstractType
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Ajoutez votre vidéo',
                 ],
-                'by_reference' => true,
+                'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'data' => $options['videos'],
             ])
         ;
     }
@@ -65,9 +63,7 @@ class TrickType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'images' => [],
-            'videos' => [],
-//            'data_class' => Trick::class,
+            'data_class' => Trick::class,
         ]);
     }
 }

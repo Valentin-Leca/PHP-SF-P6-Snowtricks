@@ -35,11 +35,13 @@ class UploadFile {
 
     public function videoId(Video $video) {
 
+        $originalUrl = $video->getVideoname();
         parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
 
         if (isset($videoId['v'])) {
             try {
                 $video->setVideoname($videoId['v']);
+                $video->setUrl($originalUrl);
             } catch (Exception $e) {
                 return $e->getMessage();
             }
@@ -60,8 +62,9 @@ class UploadFile {
         foreach ($trick->getVideos() as $video) {
 
             $check = parse_url($video->getVideoname(), PHP_URL_HOST);
+            parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
 
-            if ($check == "www.youtube.com") {
+            if ($check === "www.youtube.com" && array_key_exists('v', $videoId)) {
                 $this->videoId($video);
                 $trick->addVideo($video);
             } else {
