@@ -69,11 +69,16 @@ class TrickController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $uploadFile->uploadImage($trick);
-            $uploadFile->uploadVideo($trick);
-            $trickRepository->add($trick, true);
+            if ($uploadFile->uploadVideo($trick) === false) {
+                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
+                return $this->redirectToRoute('app_trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
+            } else {
+                $uploadFile->uploadImage($trick);
+                $uploadFile->uploadVideo($trick);
+                $trickRepository->add($trick, true);
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('trick/edit.html.twig', [

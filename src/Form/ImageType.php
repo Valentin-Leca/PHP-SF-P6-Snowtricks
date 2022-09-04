@@ -16,7 +16,7 @@ class ImageType extends AbstractType
         $builder
             ->add('file', FileType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',

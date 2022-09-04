@@ -20,17 +20,27 @@ class UploadFile {
         $this->slugger = $slugger;
     }
 
-    public function renameImage(UploadedFile $file, $image) {
+    public function renameImage(UploadedFile $file): string {
 
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
             try {
                 $file->move($this->targetDirectory, $fileName);
-                $image->setImagename($fileName);
             } catch (FileException $e) {
                 return $e->getMessage();
             }
+            return $fileName;
+    }
+
+    public function uploadImage(Trick $trick) {
+
+        foreach ($trick->getImages() as $image) {
+
+            if ($image->getImagename() === null) {
+                $image->setImagename($this->renameImage($image->getFile()));
+            }
+        }
     }
 
     public function videoId(Video $video) {
@@ -40,21 +50,11 @@ class UploadFile {
 
         if (isset($videoId['v'])) {
             try {
-                $video->setVideoname($videoId['v']);
-                $video->setUrl($originalUrl);
+                $video->setVideoname($originalUrl);
+                $video->setVideoId($videoId['v']);
             } catch (Exception $e) {
                 return $e->getMessage();
             }
-        }
-    }
-
-    public function uploadImage(Trick $trick) {
-
-        foreach ($trick->getImages()->getValues() as $image) {
-
-            $this->renameImage($image->getImagename(), $image);
-
-            $trick->addImage($image);
         }
     }
 

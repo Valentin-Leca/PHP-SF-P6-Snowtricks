@@ -21,7 +21,7 @@ class Video
     private ?trick $trick_id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $url;
+    private $videoId;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Video
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getVideoId(): ?string
     {
-        return $this->url;
+        return $this->videoId;
     }
 
-    public function setUrl(string $url): self
+    public function setVideoId(string $videoId): self
     {
-        $this->url = $url;
+        $this->videoId = $videoId;
 
         return $this;
     }
