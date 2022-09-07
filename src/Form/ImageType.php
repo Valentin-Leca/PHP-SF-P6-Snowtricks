@@ -16,13 +16,13 @@ class ImageType extends AbstractType
         $builder
             ->add('file', FileType::class, [
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
                         'mimeTypes' => [
                             'image/png',
-                            'image/jpg',
+                            'image/jpeg',
                         ],
                         'mimeTypesMessage' => 'Merci d\'ajouter une image au format jpg ou png de maximum 2Mo.',
                     ])

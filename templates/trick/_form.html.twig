@@ -15,25 +15,26 @@
     </div>
 <hr>
     <div class="form-group mt-2 mb-2">
-
         {# store the prototype on the data-prototype attribute #}
         <ul id="media-fields-list-image"
             data-prototype="{{ form_widget(form.images.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
             data-widget-counter="{{ form.images|length }}">
             {% for image in form.images %}
+                <img src="{{ asset('assets/tricks-img/' ~ image.vars.value.imagename) }}" alt="Image figure" class="img-fluid" />
                 {{ include("trick/_image.html.twig", {form: image}) }}
             {% endfor %}
         </ul>
+        {{ form_errors(form.images) }}
 
-        <button type="button" class="add-another-collection-widget-image" data-list-selector="#media-fields-list-image">
-            Ajouter une image
-        </button>
-
+        <div class="d-flex justify-content-center">
+            <button type="button" class="add-another-collection-widget-image " data-list-selector="#media-fields-list-image">
+                Ajouter une image
+            </button>
+        </div>
     </div>
 <hr>
     <div class="form-group mt-2 mb-2">
-
         {# store the prototype on the data-prototype attribute #}
         <ul id="media-fields-list-video"
             data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
@@ -43,14 +44,16 @@
                 {{ include("trick/_video.html.twig", {form: video}) }}
             {% endfor %}
         </ul>
+        {{ form_errors(form.videos) }}
 
-        <button type="button" class="add-another-collection-widget-video" data-list-selector="#media-fields-list-video">
-            Ajouter une vidéo
-        </button>
-
+        <div class="d-flex justify-content-center">
+            <button type="button" class="add-another-collection-widget-video" data-list-selector="#media-fields-list-video">
+                Ajouter une vidéo
+            </button>
+        </div>
     </div>
 <hr>
-    <div class="form-group mt-2 mb-2">
+    <div class="form-group mt-2 mb-2 d-flex flex-column align-items-center">
         {{ form_label(form.grouptrick) }}
         {{ form_widget(form.grouptrick) }}
         {{ form_errors(form.grouptrick) }}

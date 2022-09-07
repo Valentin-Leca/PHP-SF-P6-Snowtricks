@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 
 class TrickType extends AbstractType
 {
@@ -45,8 +46,12 @@ class TrickType extends AbstractType
                 ],
                 'by_reference' => false,
                 'allow_add' => true,
+                'label' => false,
                 'allow_delete' => true,
-                'required' => true,
+                'constraints' => [
+                    new Count(min: 1, max: 5, minMessage: 'Vous devez ajouter au moins une image.',
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 5 images.',)
+                ],
             ])
             ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,
@@ -55,9 +60,13 @@ class TrickType extends AbstractType
                     'placeholder' => 'Ajoutez votre vidéo',
                 ],
                 'by_reference' => false,
+                'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => true,
+                'constraints' => [
+                    new Count(min: 1, max: 5, minMessage: 'Vous devez ajouter au moins une vidéo.',
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 5 vidéos.',)
+                ],
             ])
         ;
     }

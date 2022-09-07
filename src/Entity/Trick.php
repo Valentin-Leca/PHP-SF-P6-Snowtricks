@@ -55,6 +55,9 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $videos;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $slug;
+
     #[Pure] public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -230,6 +233,18 @@ class Trick
                 $video->setTrickId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
