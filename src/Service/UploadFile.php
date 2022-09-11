@@ -37,7 +37,7 @@ class UploadFile {
 
         foreach ($trick->getImages() as $image) {
 
-            if ($image->getImagename() === null) {
+            if ($image->getFile() !== null) {
                 $image->setImagename($this->renameImage($image->getFile()));
             }
         }
