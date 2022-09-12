@@ -14,44 +14,26 @@
         {{ form_errors(form.content) }}
     </div>
 <hr>
-    <div class="form-group mt-2 mb-2">
-        {# store the prototype on the data-prototype attribute #}
-        <ul id="media-fields-list-image"
-            data-prototype="{{ form_widget(form.images.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.images|length }}">
+    <div class="form-group d-flex justify-content-center text-center mt-2 mb-2">
+        <div id="trick_images" data-prototype="{{ include('trick/_image.html.twig', {form: form.images.vars.prototype})|e("html_attr") }}" data-index="{{ form.images|length > 0 ? form.images|last.vars.name + 1 : 0 }}">
             {% for image in form.images %}
                 <img src="{{ asset('assets/tricks-img/' ~ image.vars.value.imagename) }}" alt="Image figure" class="img-fluid" />
-                {{ include("trick/_image.html.twig", {form: image}) }}
+                {{ include('trick/_image.html.twig', {form: image}) }}
             {% endfor %}
-        </ul>
-        {{ form_errors(form.images) }}
-
-        <div class="d-flex justify-content-center">
-            <button type="button" class="add-another-collection-widget-image " data-list-selector="#media-fields-list-image">
-                Ajouter une image
-            </button>
+            {{ form_errors(form.images) }}
         </div>
     </div>
+    <button type="button" class="btn btn-primary btn-new" data-collection="#trick_images">Ajouter une image</button>
 <hr>
     <div class="form-group mt-2 mb-2">
-        {# store the prototype on the data-prototype attribute #}
-        <ul id="media-fields-list-video"
-            data-prototype="{{ form_widget(form.videos.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.videos|length }}">
+        <div id="trick_videos" data-prototype="{{ include('trick/_video.html.twig', {form: form.videos.vars.prototype})|e("html_attr") }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
             {% for video in form.videos %}
-                {{ include("trick/_video.html.twig", {form: video}) }}
+                {{ include('trick/_video.html.twig', {form: video}) }}
             {% endfor %}
-        </ul>
-        {{ form_errors(form.videos) }}
-
-        <div class="d-flex justify-content-center">
-            <button type="button" class="add-another-collection-widget-video" data-list-selector="#media-fields-list-video">
-                Ajouter une vidéo
-            </button>
+            {{ form_errors(form.videos) }}
         </div>
     </div>
+    <button type="button" class="btn btn-primary btn-new" data-collection="#trick_videos">Ajouter une vidéo</button>
 <hr>
     <div class="form-group mt-2 mb-2 d-flex flex-column align-items-center">
         {{ form_label(form.grouptrick) }}
@@ -73,3 +55,6 @@
         {% endfor %}
     </div>
 {{ form_end(form) }}
+
+
+{#<img src="{{ asset('assets/tricks-img/' ~ image.vars.value.imagename) }}" alt="Image figure" class="img-fluid" />#}

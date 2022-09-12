@@ -575,11 +575,6 @@ select:not([multiple]) {
     margin-right: 15px;
 }
 
-#media-fields-list-image, #media-fields-list-video {
-    padding-left: 0;
-    list-style: none;
-}
-
 .tm-social li a i {
     width: 40px;
     height: 40px;

@@ -3,7 +3,13 @@
 {% block title %}Edit Trick{% endblock %}
 
 {% block body %}
-    <h1>Edit Trick</h1>
+    <div class="container-fluid">
+        <div class="row log-body">
+            <div class="col-lg-4 offset-4 col-12 mb-3 text-center">
+                <h2 class="tm-text-primary">Modification de la figure</h2>
+            </div>
+        </div>
+    </div>
 
     {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
 
