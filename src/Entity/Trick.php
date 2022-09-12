@@ -6,10 +6,12 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(fields:["name"], message: "Ce nom de figure existe déjà.")]
 class Trick
 {
     #[ORM\Id]
@@ -17,7 +19,7 @@ class Trick
     #[ORM\Column(type: 'integer')]
     private ?int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
     #[Assert\Length(
@@ -46,16 +48,17 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private Group $grouptrick;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist', 'remove'], orphanRemoval:
+        true)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'tricks_id', targetEntity: Image::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tricks_id', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Video::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $videos;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $slug;
 
     #[Pure] public function __construct()
