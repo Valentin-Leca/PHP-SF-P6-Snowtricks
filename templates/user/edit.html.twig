@@ -5,7 +5,13 @@
     <div class="container-fluid tm-mt-60">
         <div class="row tm-mb-50 log-body">
             <div class="col-lg-4 offset-4 col-12 mb-5 text-center">
-                <h2 class="tm-text-primary mb-5">Modifier mon profil</h2>
+                <div class="form-group tm-text-right text-center">
+                    <a href="{{ path('app_trick_new') }}"><button type="submit" class="btn btn-primary">Créer une figure</button></a>
+                </div>
+                <div class="form-group tm-text-right text-center mt-3 mb-5">
+                    <a href="{{ path('app_trick_index') }}"><button type="submit" class="btn btn-primary">Voir mes figures</button></a>
+                </div>
+                <h2 class="tm-text-primary mt-5 mb-5">Modifier mon profil</h2>
                 {% for message in app.flashes('success') %}
                     {{ message }}
                 {% endfor %}
