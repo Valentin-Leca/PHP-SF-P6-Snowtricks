@@ -11,8 +11,8 @@ use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
-class Group
-{
+class Group {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -29,6 +29,10 @@ class Group
     #[Pure] public function __construct()
     {
         $this->tricks = new ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 
     public function getId(): ?int

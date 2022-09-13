@@ -9,11 +9,7 @@
         <title>{% block title %}Snowtricks{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href=""/>
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-            <link rel="stylesheet" href="{{ asset("css/normalize.css") }}">
-            <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
-            <link rel="stylesheet" href="{{ asset("fontawesome/css/all.min.css") }}">
-            <link rel="stylesheet" href="{{ asset("css/style.css") }}">
+            {%  include "utils/style.html.twig" %}
         {% endblock %}
     </head>
 
@@ -26,75 +22,14 @@
         <div class="loader-section section-right"></div>
     </div>
 
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('home') }}">
-                <i class="fa-solid fa-person-snowboarding mr-2"></i>
-                SnowTricks
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-1" aria-current="page" href="{{ path('home') }}">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-2" href="videos.html">Figures</a>
-                    </li>
-                    <li class="nav-item">
-                        {% if app.user %}
-                            <a class="nav-link nav-link-3" href="{{ path('app_user_edit', {id : app.user.id}) }}">Mon profil</a>
-                        {% else %}
-                            <a class="nav-link nav-link-3" href="{{ path('register') }}">S'inscrire</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item">
-                        {% if app.user %}
-                            <a class="nav-link nav-link-4" href="{{ path('logout') }}">Se Déconnecter</a>
-                        {% else %}
-                            <a class="nav-link nav-link-4" href="{{ path('login') }}">Se connecter</a>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    {% include "utils/nav.html.twig" %}
 
     {% block body %}{% endblock %}
 
-    <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
-        <div class="container-fluid tm-container-small">
-            <div class="row">
-                <div class="col-lg-12 col-md-6 col-sm-6 col-12 px-5 mb-5">
-                    <ul class="tm-social-links d-flex justify-content-center pl-0 mb-2">
-                        <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
-                        <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
-                        <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
-                        <li class="mb-2"><a href="https://pinterest.com"><i class="fab fa-pinterest"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8 col-md-7 col-12 px-5 mb-3">
-                    Copyright &copy; Snowtricks Valentin Lecavelier Des Etangs
-                    2022 - {{ "now" | date("Y", "Europe/Paris") }}
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include "utils/footer.html.twig" %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        <script src="{{ asset("js/scripts.js") }}"></script>
-        <script>
-            $(window).on("load", function() {
-                $('body').addClass('loaded');
-            });
-        </script>
+        {% include "utils/script.html.twig" %}
     {% endblock %}
 
     </body>

@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="assets/img/test.jpg">
+    <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ asset('assets/img/tricks-img.jpg') }}">
         <h1>Deviens le roi du Freestyle !</h1>
         <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
             <i class="fas fa-arrow-down"></i>
@@ -22,7 +22,7 @@
                     <img src="assets/img/img-03.jpg" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>Trick Group</h2>
-                        <a href="{{ path('trick') }}">View more</a>
+                        <a href="{{ path('app_trick_index') }}">View more</a>
                     </figcaption>
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">

@@ -167,6 +167,17 @@ a:hover { color:#009999; }
     background-color:#086969;
 }
 
+#trick_grouptrick {
+    width: 125px;
+    color: black !important;
+}
+
+.label_trick_grouptrick {
+    color: #009999 !important;
+    margin-bottom: 10px;
+    display: block;
+}
+
 .btn-primary.disabled, 
 .btn-primary:disabled {
     background-color: #009999;
@@ -542,6 +553,10 @@ select:not([multiple]) {
     width:100%;
 }
 
+#media-fields-list li {
+    list-style-type: none;
+}
+
 .tm-contact-form { max-width: 420px; }
 .tm-address-col { max-width: 520px; }
 .tm-contacts { padding-left: 0; }
@@ -585,6 +600,10 @@ select:not([multiple]) {
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color:  #009999;
     opacity: 1; /* Firefox */
+}
+
+.error-msg {
+    color: red;
 }
 
 @media (max-width: 991px) {

@@ -1,0 +1,7 @@
+{{ encore_entry_script_tags('app') }}
+<script src="{{ asset("js/scripts.js") }}"></script>
+<script>
+    $(window).on("load", function() {
+        $('body').addClass('loaded');
+    });
+</script>
