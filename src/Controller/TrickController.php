@@ -18,7 +18,6 @@ class TrickController extends AbstractController {
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response {
 
-        // TODO bouger le trickrepository->findAll() dans le homeCOntroller
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findBy(['user' => $this->getUser()]),
         ]);
