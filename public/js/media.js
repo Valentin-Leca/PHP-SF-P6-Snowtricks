@@ -22,4 +22,3 @@ document.querySelectorAll('.btn-new').forEach(btn => btn.addEventListener('click
 
 
 document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".input-img").remove()));
-document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".img-fluid").remove()));

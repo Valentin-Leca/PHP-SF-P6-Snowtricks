@@ -39,6 +39,8 @@ class UploadFile {
 
             if ($image->getFile() !== null) {
                 $image->setImagename($this->renameImage($image->getFile()));
+            } else {
+                return false;
             }
         }
     }

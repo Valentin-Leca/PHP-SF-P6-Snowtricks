@@ -41,6 +41,9 @@ class TrickController extends AbstractController {
             if ($uploadFile->uploadVideo($trick) === false) {
                 $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
                 return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
+            } elseif ($uploadFile->uploadImage($trick) === false) {
+                $this->addFlash("error", "Veuillez renseigner tous les champs images.");
+                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
             } else {
                 $uploadFile->uploadImage($trick);
                 $uploadFile->uploadVideo($trick);
@@ -80,6 +83,9 @@ class TrickController extends AbstractController {
 
             if ($uploadFile->uploadVideo($trick) === false) {
                 $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
+                return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+            } elseif ($uploadFile->uploadImage($trick) === false) {
+                $this->addFlash("error", "Veuillez renseigner tous les champs images que vous ajoutez.");
                 return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
             } else {
                 $uploadFile->uploadImage($trick);
