@@ -16,22 +16,41 @@
             </h2>
         </div>
         <div class="row tm-mb-90 tm-gallery">
-            <div class="col-xl-1"></div>
+            {% set index = 0 %}
             {% for trick in tricks %}
+                {% if (index == 0) %}
+                    <div class="col-xl-1 only-xl"></div>
+                {% endif %}
+                {% if (index == 5) or (index == 10) %}
+                    <div class="col-xl-1 only-xl"></div>
+                    <div class="col-xl-1 only-xl"></div>
+                {% endif %}
                 <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                     <figure class="effect-ming tm-video-item">
-                            <img src="{{ 'assets/tricks-img/' ~ trick.images[0].imagename }}" alt="Image" class="img-fluid">
+                            <img src="{{ 'assets/tricks-img/' ~ trick.images[0].imagename }}" alt="Image" class="img-fluid trick-img">
                         <figcaption class="d-flex align-items-center justify-content-center">
                             <h2>{{ trick.grouptrick }}</h2>
                             <a href="{{ path('app_trick_show',{'slug':trick.slug}) }}">View more</a>
                         </figcaption>
                     </figure>
-                    <div class="d-flex justify-content-between tm-text-gray">
-                        <span>{{ trick.name }}</span>
-                        <span><i class="fa-solid fa-pen"></i></span>
-                        <span><i class="fa-solid fa-trash-can"></i></span>
-                    </div>
+                        {% if app.user %}
+                            {% if app.user.login == trick.user.login %}
+                                <div class="d-flex justify-content-between tm-text-gray">
+                                    <span>{{ trick.name }}</span>
+                                    <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
+                                    <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="d-flex justify-content-center tm-text-gray">
+                                <span>{{ trick.name }}</span>
+                            </div>
+                        {% endif %}
                 </div>
+                {% set index = index + 1 %}
             {% endfor %}
         </div> <!-- row -->
     </div>

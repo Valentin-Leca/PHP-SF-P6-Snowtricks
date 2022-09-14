@@ -606,6 +606,46 @@ select:not([multiple]) {
     color: red;
 }
 
+.fa-pen, .trash-can, .trick-delete {
+    color: #999 !important;
+    border: none;
+    background-color: white;
+}
+
+.trick-delete:active {
+    border: none;
+}
+
+@media (min-width: 1200px) {
+    .trick-img {
+        height: 160px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .trick-img {
+        height: 250px !important;
+    }
+}
+
+@media (min-width: 575px) and (max-width: 992px) {
+    .trick-img {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .trick-img {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .only-xl {
+        display: none !important;
+    }
+}
+
 @media (max-width: 991px) {
     .navbar-collapse {
         position: fixed;
