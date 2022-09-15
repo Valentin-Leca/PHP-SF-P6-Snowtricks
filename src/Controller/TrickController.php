@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
@@ -59,10 +61,22 @@ class TrickController extends AbstractController {
     }
 
     #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response {
+    public function show(Request $request, Trick $trick): Response {
 
-        return $this->render('trick/show.html.twig', [
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setTrick($trick);
+
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('trick/show.html.twig', [
             'trick' => $trick,
+            'form' => $form,
         ]);
     }
 

@@ -616,6 +616,11 @@ select:not([multiple]) {
     border: none;
 }
 
+.trick-video {
+    width: 260px;
+    height: 182px;
+}
+
 @media (min-width: 1200px) {
     .trick-img {
         height: 160px !important;

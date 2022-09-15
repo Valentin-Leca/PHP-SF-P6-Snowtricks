@@ -4,29 +4,38 @@
 
 {% block body %}
 
-    <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
-        <h1>{{ trick.name }}</h1>
+    <div class="container-fluid tm-container-content tm-mt-60 text-center">
+        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-1 col-md-10 col-sm-10 col-10">
+            <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
+                <h1>{{ trick.name }}</h1>
+            </div>
+        </div>
     </div>
+
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
         <div class="row tm-gallery">
-            {% for image in trick.images %}
-                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+            {% for image in trick.images|slice(0,3) %}
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
                     <img src="{{ '../assets/tricks-img/' ~ image.imagename }}" alt="Image" class="img-fluid">
                 </div>
             {% endfor %}
-        </div> <!-- row -->
-    </div> <!-- container-fluid, tm-container-content -->
+            {% for video in trick.videos|slice(0,3) %}
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
+                    <iframe class="trick-video" src="https://www.youtube.com/embed/{{ video.videoid }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
     <div class="container-fluid tm-mt-60 text-center">
         <div class="row tm-mb-50">
             <div class="col-1"></div>
             <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
                 <p>{{ trick.content }}</p>
-
             </div>
-        </div> <!-- row -->
-    </div> <!-- container-fluid -->
+        </div>
+    </div>
 
     <div class="container-fluid text-center">
         <div class="row">
@@ -54,16 +63,27 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row tm-mb-50">
-            <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
-                <form id="comment-form" action="" method="POST" class="d-flex">
-                    <textarea class="form-control tm-search-input" rows="1" placeholder="Message"></textarea>
-                    <button class="btn btn-outline-success tm-search-btn" type="submit">Envoyer</button>
-                </form>
+    {% if app.user %}
+        <div class="container-fluid">
+            <div class="row tm-50">
+                <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
+                    {% include "comment/_form.html.twig" %}
+{#                    <form id="comment-form" action="" method="POST" class="d-flex align-content-center">#}
+{#                        <textarea class="form-control tm-search-input" rows="1" placeholder="Votre commentaire"></textarea>#}
+{#                        <button class="btn btn-outline-success tm-search-btn" type="submit">Envoyer</button>#}
+{#                    </form>#}
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="container-fluid text-center">
+            <div class="row tm-50">
+                <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
+                    <p>Veuillez vous connecter pour laisser un commentaire.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="container-fluid text-center">
         <div class="row">
