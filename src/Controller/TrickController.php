@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,8 +61,8 @@ class TrickController extends AbstractController {
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Request $request, Trick $trick): Response {
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Trick $trick, CommentRepository $commentRepository): Response {
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -70,6 +71,7 @@ class TrickController extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setUser($this->getUser());
             $comment->setTrick($trick);
+            $commentRepository->add($comment, true);
 
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
