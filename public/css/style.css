@@ -631,9 +631,13 @@ select:not([multiple]) {
     height: 65px;
 }
 
+.trick-img {
+    object-fit: cover;
+}
+
 @media (min-width: 1200px) {
     .trick-img {
-        height: 160px !important;
+        height: 200px !important;
     }
 }
 

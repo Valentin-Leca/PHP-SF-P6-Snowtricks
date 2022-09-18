@@ -26,7 +26,7 @@ class UploadFile {
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
             try {
-                $file->move($this->targetDirectory, $fileName);
+                $file->move($this->getTargetDirectory(), $fileName);
             } catch (FileException $e) {
                 return $e->getMessage();
             }
@@ -37,10 +37,10 @@ class UploadFile {
 
         foreach ($trick->getImages() as $image) {
 
-            if ($image->getImagename() === null) {
+            if ($image->getFile() !== null) {
                 $image->setImagename($this->renameImage($image->getFile()));
-            } else {
-                return false;
+            } elseif ($image->getImagename() === null && $image->getFile() === null) {
+                $trick->removeImage($image);
             }
         }
     }
@@ -73,5 +73,9 @@ class UploadFile {
                 return false;
             }
         }
+    }
+
+    public function getTargetDirectory(): string {
+        return $this->targetDirectory;
     }
 }

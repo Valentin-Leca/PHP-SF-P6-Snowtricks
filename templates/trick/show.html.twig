@@ -17,7 +17,7 @@
         <div class="row tm-gallery">
             {% for image in trick.images|slice(0,3) %}
                 <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                    <img src="{{ '../assets/tricks-img/' ~ image.imagename }}" alt="Image" class="img-fluid">
+                    <img src="{{ asset('assets/tricks-img/' ~ image.imagename) }}" alt="Image" class="img-fluid">
                 </div>
             {% endfor %}
             {% for video in trick.videos|slice(0,3) %}
