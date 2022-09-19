@@ -4,14 +4,17 @@
 
     <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ asset('assets/img/tricks-img.jpg') }}">
         <h1>Deviens le roi du Freestyle !</h1>
-        <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
-            <i class="fas fa-arrow-down"></i>
-        </button>
+        <a href="#last-trick">
+            <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
+                <i class="fas fa-arrow-down"></i>
+            </button>
+        </a>
+
     </div>
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
         <div class="row mb-4">
-            <h2 class="col-12 tm-text-primary">
+            <h2 class="col-12 tm-text-primary" id="last-trick">
                 Dernières Figures
             </h2>
         </div>
@@ -43,6 +46,10 @@
                                         <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
                                     </form>
                                 </div>
+                            {% else %}
+                                <div class="d-flex justify-content-center tm-text-gray">
+                                    <span>{{ trick.name }}</span>
+                                </div>
                             {% endif %}
                         {% else %}
                             <div class="d-flex justify-content-center tm-text-gray">
@@ -52,7 +59,17 @@
                 </div>
                 {% set index = index + 1 %}
             {% endfor %}
-        </div> <!-- row -->
+        </div>
+
+        <div class="row">
+            <div class="col-12 alin-content-end text-right mb-2">
+                <a href="#last-trick">
+                    <button type="button" class="btn btn-dark btn-floating btn-lg btn-up">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

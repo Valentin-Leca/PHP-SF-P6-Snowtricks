@@ -5,7 +5,14 @@
 {% block body %}
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
-        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-1 col-md-10 col-sm-10 col-10">
+        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-1 col-md-10 col-sm-10 col-10 main-img-trick">
+            <div class="d-flex trick-buttons">
+                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
+                <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                    <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
+                </form>
+            </div>
             <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
                 <h1>{{ trick.name }}</h1>
             </div>
@@ -14,10 +21,17 @@
 
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
-        <div class="row tm-gallery">
+
+        <div class="row mb-5">
+            <div class="col-12 text-center d-flex justify-content-center">
+                <button class="btn btn-primary see-tricks" id="see-tricks">Voir les médias</button>
+            </div>
+        </div>
+
+        <div class="row tm-gallery trick-medias" id="trick-medias">
             {% for image in trick.images|slice(0,3) %}
                 <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                    <img src="{{ asset('assets/tricks-img/' ~ image.imagename) }}" alt="Image" class="img-fluid">
+                    <img src="{{ asset('assets/tricks-img/' ~ image.imagename) }}" alt="Image" class="img-fluid trick-img">
                 </div>
             {% endfor %}
             {% for video in trick.videos|slice(0,3) %}
@@ -93,14 +107,18 @@
     <div class="container-fluid text-center">
         <div class="row">
             {% for comment in trick.comments %}
-                <div class="col-xl-2 offset-xl-4 col-lg-2 offset-lg-3 col-md-2 offset-md-3 d-flex flex-column align-content-end avatar-comment">
-                    <img src="{{ asset('assets/img/'~comment.user.avatar~".png") }}" alt="test">
+                <div class="col-xl-2 offset-xl-4 col-lg-2 offset-lg-3 col-md-2 offset-md-3 col-sm-2 offset-sm-3
+                  col-2 offset-3 d-flex flex-column align-content-center align-content-sm-end avatar-comment">
+                    {% if comment.user.avatar is same as(null)  %}
+                    {% else %}
+                        <img src="{{ asset('assets/img/'~comment.user.avatar~".png") }}" alt="test">
+                    {% endif %}
                     {{ comment.user.login }}
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-4 mb-2 text-comment">
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-4 mb-5 text-comment">
                     {{ comment.content }}
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-3">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                 </div>
             {% endfor %}
         </div>

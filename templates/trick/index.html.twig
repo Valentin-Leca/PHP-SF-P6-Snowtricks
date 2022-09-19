@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ trick.id }}</td>
                 <td>{{ trick.name }}</td>
-                <td>{{ trick.content }}</td>
+                <td>{{ trick.content|slice(0,50) }}</td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trick.updatedAt ? trick.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

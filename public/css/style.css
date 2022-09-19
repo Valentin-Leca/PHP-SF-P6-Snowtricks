@@ -86,7 +86,7 @@
         border-radius: 50%;
         position: absolute;
         bottom: 135px;
-        right: 20px;
+        right: 14px;
     }
 
     #loader-wrapper .loader-section {
@@ -160,6 +160,10 @@ a:hover { color:#009999; }
     border-radius: 5px;
     padding: 12px 50px 14px;
     font-size: 1.2rem;
+}
+
+.btn-up {
+    border-radius: 50%;
 }
 
 .btn-primary:hover,
@@ -635,26 +639,38 @@ select:not([multiple]) {
     object-fit: cover;
 }
 
+.main-img-trick {
+    position: relative;
+}
+
+.trick-buttons {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    background-color: white;
+    padding: 0 0.5rem 0 0.8rem;
+}
+
 @media (min-width: 1200px) {
-    .trick-img {
+    .trick-img, .trick-video {
         height: 200px !important;
     }
 }
 
 @media (min-width: 992px) and (max-width: 1200px) {
-    .trick-img {
+    .trick-img, .trick-video {
         height: 250px !important;
     }
 }
 
 @media (min-width: 575px) and (max-width: 992px) {
-    .trick-img {
+    .trick-img, .trick-video {
         height: 300px !important;
     }
 }
 
 @media (max-width: 575px) {
-    .trick-img {
+    .trick-img, .trick-video {
         height: 300px !important;
     }
 }
@@ -703,6 +719,20 @@ select:not([multiple]) {
     }
 
     .tm-people-row { max-width: 420px; }
+}
+
+.see-tricks {
+    display: none;
+}
+
+@media screen and (min-width: 0px) and (max-width: 425px) {
+    .see-tricks {
+        display: block !important;
+    }
+
+    .trick-medias {
+        display: none;
+    }
 }
 
 @media (max-width: 400px) {

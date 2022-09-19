@@ -128,15 +128,13 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO limiter images et vidéos à 3
+// TODO custom pages erreurs (404, 500, ?)
 
-// TODO sur un trick, media queries des vidéos
-
-// TODO finir responsive commentaires
+// TODO Vérifier la limite images et vidéos à 3
 
 // TODO data-fixtures pour les figures + 1 utilisateur
 
-// TODO nom/bouton édition/bouton supp si pas le même user !!
+// TODO voir pourquoi bouton poubelle ne fonctionne pas
 
 // TODO pagination https://nicolasfz-code.medium.com/symfony-paginer-les-r%C3%A9sultats-dune-requ%C3%AAte-avec-doctrine-ebe7873197c9
 // TODO https://www.doctrine-project.org/projects/doctrine-orm/en/2.13/tutorials/pagination.html
