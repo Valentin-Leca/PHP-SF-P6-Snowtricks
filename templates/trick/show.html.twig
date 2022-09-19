@@ -4,45 +4,55 @@
 
 {% block body %}
 
-    <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
-        <h1>{{ trick.name }}</h1>
+    <div class="container-fluid tm-container-content tm-mt-60 text-center">
+        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-1 col-md-10 col-sm-10 col-10">
+            <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
+                <h1>{{ trick.name }}</h1>
+            </div>
+        </div>
     </div>
+
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
         <div class="row tm-gallery">
-            {% for image in trick.images %}
-                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <img src="{{ '../assets/tricks-img/' ~ image.imagename }}" alt="Image" class="img-fluid">
+            {% for image in trick.images|slice(0,3) %}
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                    <img src="{{ asset('assets/tricks-img/' ~ image.imagename) }}" alt="Image" class="img-fluid">
                 </div>
             {% endfor %}
-        </div> <!-- row -->
-    </div> <!-- container-fluid, tm-container-content -->
+            {% for video in trick.videos|slice(0,3) %}
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 div-video">
+                    <iframe class="trick-video" src="https://www.youtube.com/embed/{{ video.videoid }}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
     <div class="container-fluid tm-mt-60 text-center">
         <div class="row tm-mb-50">
             <div class="col-1"></div>
             <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
                 <p>{{ trick.content }}</p>
-
             </div>
-        </div> <!-- row -->
-    </div> <!-- container-fluid -->
+        </div>
+    </div>
 
     <div class="container-fluid text-center">
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            <div class="col-xl-2 col-lg-2 col-md-2"></div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
                 <p>Créateur :<br/>{{ trick.user.login }}</p>
             </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
                 <p>Type :<br/>{{ trick.grouptrick }}</p>
             </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
                 <p>Créé le :<br/>{{ trick.createdat|date('d-m-Y') }}</p>
             </div>
-            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
                 <p>Modifié le : {% if trick.updatedat is not null %}{{ trick.updatedat|date('d-m-Y') }}{% endif %}<br/></p>
             </div>
+            <div class="col-xl-2 col-lg-2 col-md-2"></div>
         </div>
     </div>
 
@@ -54,22 +64,45 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row tm-mb-50">
-            <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
-                <form id="comment-form" action="" method="POST" class="d-flex">
-                    <textarea class="form-control tm-search-input" rows="1" placeholder="Message"></textarea>
-                    <button class="btn btn-outline-success tm-search-btn" type="submit">Envoyer</button>
-                </form>
+    {% if app.user %}
+        <div class="container-fluid">
+            <div class="row tm-50">
+                <div class="col-xl-4 offset-xl-4 col-lg-10 offset-lg-1 col-8 offset-2">
+                    {% include "comment/_form.html.twig" %}
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="container-fluid text-center">
+            <div class="row tm-50">
+                <div class="col-xl-4 offset-xl-4 col-lg-10 col-12">
+                    <p>Veuillez vous connecter pour laisser un commentaire.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="container-fluid text-center">
         <div class="row">
             <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-10 offset-1">
                 <hr>
             </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            {% for comment in trick.comments %}
+                <div class="col-xl-2 offset-xl-4 col-lg-2 offset-lg-3 col-md-2 offset-md-3 d-flex flex-column align-content-end avatar-comment">
+                    <img src="{{ asset('assets/img/'~comment.user.avatar~".png") }}" alt="test">
+                    {{ comment.user.login }}
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-4 mb-2 text-comment">
+                    {{ comment.content }}
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3">
+                </div>
+            {% endfor %}
         </div>
     </div>
 

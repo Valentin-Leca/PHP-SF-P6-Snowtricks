@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,19 +40,19 @@ class TrickController extends AbstractController {
             $trick->setSlug(strtolower($slug));
             $trick->setUser($this->getUser());
 
-            if ($uploadFile->uploadVideo($trick) === false) {
-                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
-                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-            } elseif ($uploadFile->uploadImage($trick) === false) {
-                $this->addFlash("error", "Veuillez renseigner tous les champs images.");
-                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-            } else {
+//            if ($uploadFile->uploadVideo($trick) === false) {
+//                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
+//                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
+//            } elseif ($uploadFile->uploadImage($trick) === false) {
+//                $this->addFlash("error", "Veuillez renseigner tous les champs images.");
+//                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
+//            } else {
                 $uploadFile->uploadImage($trick);
                 $uploadFile->uploadVideo($trick);
                 $trickRepository->add($trick, true);
 
                 return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
-            }
+//            }
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -58,11 +61,24 @@ class TrickController extends AbstractController {
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response {
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Trick $trick, CommentRepository $commentRepository): Response {
 
-        return $this->render('trick/show.html.twig', [
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setTrick($trick);
+            $commentRepository->add($comment, true);
+
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('trick/show.html.twig', [
             'trick' => $trick,
+            'form' => $form,
         ]);
     }
 
@@ -111,3 +127,18 @@ class TrickController extends AbstractController {
         return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+
+// TODO limiter images et vidéos à 3
+
+// TODO sur un trick, media queries des vidéos
+
+// TODO finir responsive commentaires
+
+// TODO data-fixtures pour les figures + 1 utilisateur
+
+// TODO nom/bouton édition/bouton supp si pas le même user !!
+
+// TODO pagination https://nicolasfz-code.medium.com/symfony-paginer-les-r%C3%A9sultats-dune-requ%C3%AAte-avec-doctrine-ebe7873197c9
+// TODO https://www.doctrine-project.org/projects/doctrine-orm/en/2.13/tutorials/pagination.html
+
+// TODO ajouter remove d'image dans vidéo (ligne 43) service UploadFile.php

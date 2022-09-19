@@ -30,7 +30,6 @@ class UserController extends AbstractController {
 
             $this->addFlash("success", "Votre profil a bien été mis à jour !");
 
-            //TODO parler du redirect avec Thibaut
             return $this->redirectToRoute('app_user_edit', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
