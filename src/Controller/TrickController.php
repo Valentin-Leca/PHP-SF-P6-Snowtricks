@@ -128,7 +128,7 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO Vérifier la limite images et vidéos à 3
+// TODO Avec Thibaut, afficher messages erreurs si plus 3 images ou vidéos
 
 // TODO data-fixtures pour les figures + 1 utilisateur
 
