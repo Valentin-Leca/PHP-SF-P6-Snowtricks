@@ -128,8 +128,6 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO custom pages erreurs (404, 500, ?)
-
 // TODO Vérifier la limite images et vidéos à 3
 
 // TODO data-fixtures pour les figures + 1 utilisateur

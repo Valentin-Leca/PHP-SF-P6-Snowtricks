@@ -6,7 +6,11 @@
         <div class="row tm-mb-50 log-body">
             <div class="col-lg-4 offset-4 col-12 mb-5 text-center">
                 <h2 class="tm-text-primary mt-5 mb-5">Création de votre figure</h2>
-                {% include "trick/_form.html.twig" %}
+                {% if app.user %}
+                    {% include "trick/_form.html.twig" %}
+                {% else %}
+                    <p>Veuillez vous connecter pour créer une figure.</p>
+                {% endif %}
             </div>
         </div>
     </div>
