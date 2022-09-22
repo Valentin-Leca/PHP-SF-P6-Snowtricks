@@ -130,8 +130,6 @@ class TrickController extends AbstractController {
 
 // TODO Avec Thibaut, afficher messages erreurs si plus 3 images ou vidéos
 
-// TODO data-fixtures pour les figures + 1 utilisateur
-
 // TODO voir pourquoi bouton poubelle ne fonctionne pas
 
 // TODO pagination https://nicolasfz-code.medium.com/symfony-paginer-les-r%C3%A9sultats-dune-requ%C3%AAte-avec-doctrine-ebe7873197c9
