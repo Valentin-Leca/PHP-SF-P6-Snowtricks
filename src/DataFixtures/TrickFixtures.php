@@ -2,7 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
+use App\Entity\Image;
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,29 +19,20 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
         $trickNameRotations = ['180', '360', '540', '720', '900', '1080'];
         $trickNameFlips = ['Front-Flip', 'Back-Flip'];
         $trickNameSlides = ['Shifty', 'Spray', 'Slide'];
-        $trickContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis condimentum pharetra.
-         Pellentesque sit amet sapien finibus, laoreet augue iaculis, porttitor ipsum. Aliquam non dictum mi.
-         Donec id dui iaculis, dictum odio eu, semper libero. Phasellus felis velit, ultrices ac placerat sed, tristique id odio.
-         Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis gravida neque felis,
-         a laoreet ex maximus ut. Sed pharetra lectus vel tortor iaculis viverra. Curabitur elit lacus, tempus quis
-         suscipit eu, semper sollicitudin diam. Nullam consequat nec orci sit amet tempus. Nam in diam feugiat lacus
-         ultricies dapibus vitae nec lectus. Donec enim justo, posuere non ante rutrum, tempor porta tortor.
-         Maecenas non diam lectus. Curabitur vehicula rutrum elit ac euismod. Quisque mattis mauris quam, et tempor metus maximus et.
-
-         Aliquam erat volutpat. Phasellus at massa iaculis, fringilla tortor id, posuere purus. Suspendisse pharetra elit
-         et sem aliquet hendrerit. Sed non lacus convallis, tempor nunc in, ornare libero. Aenean et erat et arcu maximus
-         dignissim. Mauris est ipsum, malesuada at eleifend vel, bibendum et eros. Donec sed sagittis arcu. Duis mattis
-         nibh in leo placerat posuere. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-         Etiam pulvinar, enim eu tristique scelerisque, ante velit tempor eros, ut imperdiet ipsum felis sit amet massa.
-         Praesent mollis luctus iaculis. Nunc sollicitudin nibh id nunc fringilla, vitae finibus libero dapibus.
-         Praesent dapibus pharetra sollicitudin. In leo neque, vestibulum non tellus quis, tempus congue diam. Vivamus sodales
-         pretium leo, nec egestas ipsum suscipit id.
-
-         Mauris egestas turpis lacinia, tincidunt eros sit amet, tincidunt diam. Nam ante turpis, pellentesque vitae vulputate
-         ut, vestibulum nec felis. Vestibulum urna diam, accumsan vitae convallis vitae, vehicula sed libero. Vestibulum finibus,
-         sem et porta venenatis, nisi est porttitor neque, et vestibulum sapien nunc et neque. Maecenas congue, turpis
-         eget tempor eleifend, ex ante eleifend ex, at efficitur neque justo sed diam. Ut suscipit tincidunt enim, nec imperdiet
-         ligula condimentum in. Aliquam at venenatis mauris, sed luctus risus.";
+        $comments = ['Super, j\'adore cette figure !', 'Vivement la prochaine !', 'Trop difficile à faire celle-ci ^_^'];
+        $videoLinks = ['https://www.youtube.com/watch?v=arzLq-47QFA', 'https://www.youtube.com/watch?v=eGJ8keB1-JM',
+            'https://www.youtube.com/watch?v=BVeAbNIHktE'];
+        $trickContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel purus id nulla pulvinar dapibus.
+        Nam dui lectus, lobortis sit amet magna et, faucibus hendrerit mi. Vestibulum ante ipsum primis in
+        faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque placerat, massa sit amet rutrum viverra, 
+        velit ipsum varius mauris, eu ultrices urna nisl aliquet justo. Ut placerat enim enim, ac ullamcorper 
+        nisi efficitur vel. Praesent interdum velit eget libero commodo, dapibus fringilla est tempus. Praesent vitae 
+        orci sed dolor gravida accumsan a ut lorem. In ornare turpis vitae sem rhoncus, id ullamcorper nunc viverra. 
+        In sagittis arcu eu purus commodo ultricies. Donec quis molestie ex. Sed turpis elit, vestibulum quis vulputate
+        a, aliquam eu arcu. Mauris dapibus lacus sit amet euismod pretium. Donec sodales, tellus eget venenatis
+        pharetra, nibh quam fermentum lorem, at mattis erat metus sed neque. Vestibulum ac euismod est, sed
+        sollicitudin nunc. In rhoncus fringilla nisl, a tincidunt diam mattis ac. Nunc dui felis, euismod a scelerisque
+        et, consectetur eu sem.";
 
         foreach($trickNameGrabs as $grab) {
             $trick = new Trick();
@@ -48,10 +42,145 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
             $slug = $slugger->slug($trick->getName());
             $trick->setSlug(strtolower($slug));
             $trick->setUser($this->getReference(UserFixtures::USER));
-            $trick->setGrouptrick($this->getReference(GroupFixtures::GROUP));
+            $trick->setGrouptrick($this->getReference("TrickGroup0"));
+
+            for($i = 1; $i < 4; $i++) {
+                $image = new Image();
+                $image->setImagename("Snowboard-".rand(1, 3).".jpg");
+                $image->setTricksId($trick);
+                $image->setFile(NULL);
+                $manager->persist($image);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $video = new Video();
+                $video->setVideoname($videoLinks[$i]);
+                $video->setVideoId(substr($videoLinks[$i], 32, 11));
+                $video->setTrickId($trick);
+                $manager->persist($video);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $comment = new Comment();
+                $comment->setContent($comments[$i]);
+                $comment->setTrick($trick);
+                $comment->setUser($this->getReference(UserFixtures::USER));
+                $manager->persist($comment);
+            }
+
             $manager->persist($trick);
         }
 
+        foreach($trickNameRotations as $rotation) {
+            $trick = new Trick();
+            $trick->setName($rotation);
+            $trick->setContent($trickContent);
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($trick->getName());
+            $trick->setSlug(strtolower($slug));
+            $trick->setUser($this->getReference(UserFixtures::USER));
+            $trick->setGrouptrick($this->getReference("TrickGroup1"));
+
+            for($i = 1; $i < 4; $i++) {
+                $image = new Image();
+                $image->setImagename("Snowboard-".rand(1, 3).".jpg");
+                $image->setTricksId($trick);
+                $image->setFile(NULL);
+                $manager->persist($image);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $video = new Video();
+                $video->setVideoname($videoLinks[$i]);
+                $video->setVideoId(substr($videoLinks[$i], 32, 11));
+                $video->setTrickId($trick);
+                $manager->persist($video);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $comment = new Comment();
+                $comment->setContent($comments[$i]);
+                $comment->setTrick($trick);
+                $comment->setUser($this->getReference(UserFixtures::USER));
+                $manager->persist($comment);
+            }
+
+            $manager->persist($trick);
+        }
+
+        foreach($trickNameFlips as $flip) {
+            $trick = new Trick();
+            $trick->setName($flip);
+            $trick->setContent($trickContent);
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($trick->getName());
+            $trick->setSlug(strtolower($slug));
+            $trick->setUser($this->getReference(UserFixtures::USER));
+            $trick->setGrouptrick($this->getReference("TrickGroup2"));
+
+            for($i = 1; $i < 4; $i++) {
+                $image = new Image();
+                $image->setImagename("Snowboard-".rand(1, 3).".jpg");
+                $image->setTricksId($trick);
+                $image->setFile(NULL);
+                $manager->persist($image);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $video = new Video();
+                $video->setVideoname($videoLinks[$i]);
+                $video->setVideoId(substr($videoLinks[$i], 32, 11));
+                $video->setTrickId($trick);
+                $manager->persist($video);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $comment = new Comment();
+                $comment->setContent($comments[$i]);
+                $comment->setTrick($trick);
+                $comment->setUser($this->getReference(UserFixtures::USER));
+                $manager->persist($comment);
+            }
+
+            $manager->persist($trick);
+        }
+
+        foreach($trickNameSlides as $slide) {
+            $trick = new Trick();
+            $trick->setName($slide);
+            $trick->setContent($trickContent);
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($trick->getName());
+            $trick->setSlug(strtolower($slug));
+            $trick->setUser($this->getReference(UserFixtures::USER));
+            $trick->setGrouptrick($this->getReference("TrickGroup3"));
+
+            for($i = 1; $i < 4; $i++) {
+                $image = new Image();
+                $image->setImagename("Snowboard-".rand(1, 3).".jpg");
+                $image->setTricksId($trick);
+                $image->setFile(NULL);
+                $manager->persist($image);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $video = new Video();
+                $video->setVideoname($videoLinks[$i]);
+                $video->setVideoId(substr($videoLinks[$i], 32, 11));
+                $video->setTrickId($trick);
+                $manager->persist($video);
+            }
+
+            for($i = 0; $i < 3; $i++) {
+                $comment = new Comment();
+                $comment->setContent($comments[$i]);
+                $comment->setTrick($trick);
+                $comment->setUser($this->getReference(UserFixtures::USER));
+                $manager->persist($comment);
+            }
+
+            $manager->persist($trick);
+        }
         $manager->flush();
     }
 

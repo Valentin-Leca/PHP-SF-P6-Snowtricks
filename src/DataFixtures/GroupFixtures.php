@@ -14,12 +14,12 @@ class GroupFixtures extends Fixture {
 
         $groupName = ['Grabs', 'Rotations', 'Flips', 'Slides'];
 
-        foreach($groupName as $name) {
+        foreach($groupName as $key => $name) {
             $group = new Group();
             $group->setName($name);
             $manager->persist($group);
+            $this->addReference(self::GROUP.$key, $group);
         }
         $manager->flush();
-        $this->addReference(self::GROUP, $group);
     }
 }
