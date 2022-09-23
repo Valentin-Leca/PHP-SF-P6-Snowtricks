@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,6 +46,17 @@ class TrickRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function findTrickPaginated(int $offset): Paginator {
+
+        $query = $this->createQueryBuilder('t')
+            ->setFirstResult($offset)
+            ->setMaxResults(15)
+            ->getQuery();
+
+        return new Paginator($query);
+
     }
 
 //    /**

@@ -4,6 +4,7 @@
         'id': 'register-form',
     }
 }) }}
+{{ form_errors(form) }}
     <div class="form-group mt-2 mb-2">
         {{ form_widget(form.name) }}
         {{ form_errors(form.name) }}
