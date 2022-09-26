@@ -22,7 +22,7 @@ class HomeController extends AbstractController {
             'tricks' => $tricks,
             'previous' => $offset - 15,
             'next' => min(count($tricks), $offset + 15),
-            'nbPages' => count($tricks) / 15,
+            'nbPages' => ceil(count($tricks)) / 15,
         ]);
     }
 }
