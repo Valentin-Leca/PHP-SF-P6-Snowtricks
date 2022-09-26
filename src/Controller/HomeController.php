@@ -16,7 +16,6 @@ class HomeController extends AbstractController {
         $offset = max(0, $request->query->getInt("offset"));
         $tricks = $trickRepository->findTrickPaginated($offset);
 
-
         return $this->render('home.html.twig', [
             'offset' => $offset,
             'tricks' => $tricks,

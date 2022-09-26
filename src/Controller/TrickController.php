@@ -68,6 +68,10 @@ class TrickController extends AbstractController {
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
+        //paginate comments
+        $offset = max(0, $request->query->getInt("offset"));
+        $comments = $commentRepository->findCommentPaginated($offset, $trick);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setUser($this->getUser());
             $comment->setTrick($trick);
@@ -77,6 +81,7 @@ class TrickController extends AbstractController {
         }
 
         return $this->renderForm('trick/show.html.twig', [
+            'comments' => $comments,
             'trick' => $trick,
             'form' => $form,
         ]);
