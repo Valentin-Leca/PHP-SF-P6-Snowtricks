@@ -81,8 +81,12 @@ class TrickController extends AbstractController {
         }
 
         return $this->renderForm('trick/show.html.twig', [
+            'offset' => $offset,
             'comments' => $comments,
             'trick' => $trick,
+            'previous' => $offset - 4,
+            'next' => min(count($comments), $offset + 4),
+            'nbPages' => ceil(count($comments)) / 4,
             'form' => $form,
         ]);
     }

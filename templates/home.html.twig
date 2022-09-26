@@ -64,14 +64,14 @@
             <div class="col-12 alin-content-center text-center mb-2">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        {% if offset > 15  %}
+                        {% if offset > 0  %}
                             <li class="page-item">
                                 <a class="page-link"
                                    href="{{ path('home', {offset: previous}) }}">Précédent
                                 </a>
                             </li>
                         {% endif %}
-                        {% for i in 1..nbPages|round(0, 'floor') %}
+                        {% for i in 0..nbPages|round(0, 'floor') %}
                             <li class="page-item {% if i == (offset / 15) %}active{% endif %}">
                                 <a class="page-link"
                                    href="{{ path('home', {offset: i * 15}) }}">{{ i }}

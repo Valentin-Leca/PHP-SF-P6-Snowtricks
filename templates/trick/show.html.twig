@@ -124,4 +124,34 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 alin-content-center text-center mb-2">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if offset > 0  %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ path('app_trick_show', {slug: trick.slug, offset: previous}) }}">Précédent
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in 0..nbPages|round(0, 'floor') %}
+                        <li class="page-item {% if i == (offset / 4) %}active{% endif %}">
+                            <a class="page-link"
+                               href="{{ path('app_trick_show', {slug: trick.slug, offset: i * 4}) }}">{{ i }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    {% if offset < comments|length %}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ path('app_trick_show', {slug: trick.slug, offset: next}) }}">Suivant
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
 {% endblock %}
