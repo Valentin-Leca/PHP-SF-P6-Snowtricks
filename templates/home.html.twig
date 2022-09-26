@@ -42,7 +42,7 @@
                                     <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
                                     <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                                        <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
+                                        <button type="submit" class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
                                     </form>
                                 </div>
                             {% else %}
@@ -58,6 +58,36 @@
                 </div>
                 {% set index = index + 1 %}
             {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-12 alin-content-center text-center mb-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if offset > 0  %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: previous}) }}">Précédent
+                                </a>
+                            </li>
+                        {% endif %}
+{#                        {% for i in range(0, nbPages, 1) %}#}
+{#                            <li class="page-item">#}
+{#                                <a class="page-link"#}
+{#                                   href="{{ path('home', {offset: offset + 15}) }}">{{ i }}#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+                        {% if offset < tricks|length - 5 %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: next}) }}">Suivant
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         <div class="row">

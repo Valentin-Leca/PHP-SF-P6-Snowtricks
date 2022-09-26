@@ -5,8 +5,16 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture {
+
+    private UserPasswordHasherInterface $userPasswordHasher;
+
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher) {
+
+        $this->userPasswordHasher = $userPasswordHasher;
+    }
 
     public const USER = 'Valentin';
 
@@ -14,7 +22,7 @@ class UserFixtures extends Fixture {
 
          $user = new User();
          $user->setLogin("Valentin");
-         $user->setPassword("$2y$13\$tuGbSrJpNflNfunXwy1TaOielZ4ZqJhPoQGrd4C9ieMJMgt2Iwkha");
+         $user->setPassword($this->userPasswordHasher->hashPassword($user, 'Valentin'));
          $user->setMail("valentin.val78@hotmail.fr");
          $user->setFirstname("Valentin");
          $user->setName("Lecavelier");

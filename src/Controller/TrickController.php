@@ -117,7 +117,7 @@ class TrickController extends AbstractController {
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/delete/{slug}', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response {
 
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
@@ -128,11 +128,8 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO Avec Thibaut, afficher messages erreurs si plus 3 images ou vidéos
+// TODO Afficher messages erreurs si plus 3 images ou vidéos (stylisé dans div css)
 
-// TODO voir pourquoi bouton poubelle ne fonctionne pas
+// TODO Pagination commentaires
 
-// TODO pagination https://nicolasfz-code.medium.com/symfony-paginer-les-r%C3%A9sultats-dune-requ%C3%AAte-avec-doctrine-ebe7873197c9
-// TODO https://www.doctrine-project.org/projects/doctrine-orm/en/2.13/tutorials/pagination.html
-
-// TODO ajouter remove d'image dans vidéo (ligne 43) service UploadFile.php
+// TODO Ajouter remove d'image dans vidéo (ligne 43) service UploadFile.php
