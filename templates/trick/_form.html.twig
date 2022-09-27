@@ -17,20 +17,20 @@
         {{ form_errors(form.content) }}
     </div>
 <hr>
-    <div class="form-group  d-flex justify-content-center text-center mt-2 mb-2">
+    <div class="form-group text-center mt-2 mb-2">
         <div id="trick_images" data-prototype="{{ include('trick/_image.html.twig', {form: form.images.vars.prototype})|e("html_attr") }}" data-index="{{ form.images|length > 0 ? form.images|last.vars.name + 1 : 0 }}">
-            <div class="div-input-images">
-                {% for image in form.images %}
+            {% for image in form.images %}
+                <div class="div-input-images">
                     <img src="{{ asset('assets/tricks-img/' ~ image.vars.value.imagename) }}" alt="Image figure" class="img-fluid" />
                     {{ include('trick/_image.html.twig', {form: image}) }}
-                {% endfor %}
-                {{ form_errors(form.images) }}
-            </div>
+                </div>
+            {% endfor %}
+            {{ form_errors(form.images) }}
         </div>
     </div>
     <button type="button" class="btn btn-primary btn-new" data-collection="#trick_images">Ajouter une image</button>
 <hr>
-    <div class="form-group mt-2 mb-2">
+    <div class="form-group text-center mt-2 mb-2">
         <div id="trick_videos" data-prototype="{{ include('trick/_video.html.twig', {form: form.videos.vars.prototype})|e("html_attr") }}" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}">
             {% for video in form.videos %}
                 {{ include('trick/_video.html.twig', {form: video}) }}
@@ -40,7 +40,7 @@
     </div>
     <button type="button" class="btn btn-primary btn-new" data-collection="#trick_videos">Ajouter une vidéo</button>
 <hr>
-    <div class="form-group mt-2 mb-2 d-flex flex-column align-items-center">
+    <div class="form-group mt-2 mb-2">
         {{ form_label(form.grouptrick) }}
         {{ form_widget(form.grouptrick) }}
         {{ form_errors(form.grouptrick) }}
@@ -60,6 +60,3 @@
         {% endfor %}
     </div>
 {{ form_end(form) }}
-
-
-{#<img src="{{ asset('assets/tricks-img/' ~ image.vars.value.imagename) }}" alt="Image figure" class="img-fluid" />#}

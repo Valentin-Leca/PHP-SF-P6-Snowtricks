@@ -2,7 +2,7 @@ const newItem = (e) => {
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
 
     const item = document.createElement("div");
-    item.classList.add("col-4");
+    item.classList.add("col-4.d-flex.justify-content-center");
     item.innerHTML = collectionHolder
         .dataset
         .prototype

@@ -40,19 +40,11 @@ class TrickController extends AbstractController {
             $trick->setSlug(strtolower($slug));
             $trick->setUser($this->getUser());
 
-//            if ($uploadFile->uploadVideo($trick) === false) {
-//                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
-//                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-//            } elseif ($uploadFile->uploadImage($trick) === false) {
-//                $this->addFlash("error", "Veuillez renseigner tous les champs images.");
-//                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-//            } else {
-                $uploadFile->uploadImage($trick);
-                $uploadFile->uploadVideo($trick);
-                $trickRepository->add($trick, true);
+            $uploadFile->uploadImage($trick);
+            $uploadFile->uploadVideo($trick);
+            $trickRepository->add($trick, true);
 
-                return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
-//            }
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -105,19 +97,11 @@ class TrickController extends AbstractController {
             $trick->setSlug(strtolower($slug));
             $trick->setUpdatedAt(date_create_immutable());
 
-            if ($uploadFile->uploadVideo($trick) === false) {
-                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
-                return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
-            } elseif ($uploadFile->uploadImage($trick) === false) {
-                $this->addFlash("error", "Veuillez renseigner tous les champs images que vous ajoutez.");
-                return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
-            } else {
-                $uploadFile->uploadImage($trick);
-                $uploadFile->uploadVideo($trick);
-                $trickRepository->add($trick, true);
+            $uploadFile->uploadImage($trick);
+            $uploadFile->uploadVideo($trick);
+            $trickRepository->add($trick, true);
 
-                return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
-            }
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -133,10 +117,9 @@ class TrickController extends AbstractController {
             $trickRepository->remove($trick, true);
         }
 
-        return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+        $this->addFlash("success", "Votre figure a bien été supprimée.");
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
 
-// TODO affichage input vidéo création et édition trick
-
-// TODO Js corbeille vidéos
+// TODO Voir avec Thibaut : The "C:\tmp\php57C2.tmp" file does not exist or is not readable lors de l'édition au cas ou

@@ -12,7 +12,12 @@
     </div>
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
-        <div class="row mb-4">
+        <div class="row mb-2">
+            {% for message in app.flashes('success') %}
+                <div class="mb-2 text-center alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <h2 class="col-12 tm-text-primary" id="last-trick">
                 Dernières Figures
             </h2>
@@ -74,11 +79,11 @@
                         {% for i in 0..nbPages|round(0, 'floor') %}
                             <li class="page-item {% if i == (offset / 15) %}active{% endif %}">
                                 <a class="page-link"
-                                   href="{{ path('home', {offset: i * 15}) }}">{{ i }}
+                                   href="{{ path('home', {offset: i * 15}) }}">{{ i  }}
                                 </a>
                             </li>
                         {% endfor %}
-                        {% if offset < tricks|length - 5 %}
+                        {% if offset < tricks|length - tricks|length - 2 %}
                             <li class="page-item">
                                 <a class="page-link"
                                    href="{{ path('home', {offset: next}) }}">Suivant
