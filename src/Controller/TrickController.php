@@ -137,8 +137,6 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO Afficher messages erreurs si plus 3 images ou vidéos (stylisé dans div css)
+// TODO affichage input vidéo création et édition trick
 
-// TODO Pagination commentaires
-
-// TODO Ajouter remove d'image dans vidéo (ligne 43) service UploadFile.php
+// TODO Js corbeille vidéos

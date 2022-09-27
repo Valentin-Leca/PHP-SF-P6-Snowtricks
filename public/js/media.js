@@ -17,8 +17,11 @@ const newItem = (e) => {
 
     collectionHolder.dataset.index++;
 };
-document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".col-4").remove()));
+
+// create and delete the new input at edition
 document.querySelectorAll('.btn-new').forEach(btn => btn.addEventListener('click', newItem));
+document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".col-4").remove()));
 
-
-document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".input-img").remove()));
+// delete the input already existing at edition
+document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".div-input-images").remove()));
+document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".input-video").remove()));
