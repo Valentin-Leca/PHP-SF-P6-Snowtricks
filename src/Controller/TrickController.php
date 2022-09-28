@@ -101,7 +101,7 @@ class TrickController extends AbstractController {
             $uploadFile->uploadVideo($trick);
             $trickRepository->add($trick, true);
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -123,3 +123,7 @@ class TrickController extends AbstractController {
 }
 
 // TODO Voir avec Thibaut : The "C:\tmp\php57C2.tmp" file does not exist or is not readable lors de l'édition au cas ou
+
+// TODO problème si pas d'input vidéo = trick validé
+
+// TODO pagination petit bug et scroll vertical sur la vue des tricks

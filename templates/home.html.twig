@@ -37,13 +37,13 @@
                             <img src="{{ 'assets/tricks-img/' ~ trick.images[0].imagename }}" alt="Image" class="img-fluid trick-img">
                         <figcaption class="d-flex align-items-center justify-content-center">
                             <h2>{{ trick.grouptrick }}</h2>
-                            <a href="{{ path('app_trick_show',{'slug':trick.slug}) }}">View more</a>
+                            <a href="{{ path('app_trick_show',{'slug':trick.slug}) }}">Voir plus</a>
                         </figcaption>
                     </figure>
                         {% if app.user %}
                             {% if app.user.login == trick.user.login %}
                                 <div class="d-flex justify-content-between tm-text-gray">
-                                    <span>{{ trick.name }}</span>
+                                    <span>{{ trick.name|slice(0,10) }}{% if trick.name|length > 10 %}...{% endif %}</span>
                                     <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
                                     <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
@@ -78,12 +78,15 @@
                         {% endif %}
                         {% for i in 0..nbPages|round(0, 'floor') %}
                             <li class="page-item {% if i == (offset / 15) %}active{% endif %}">
-                                <a class="page-link"
-                                   href="{{ path('home', {offset: i * 15}) }}">{{ i  }}
-                                </a>
+                                {% if (offset == nbPages|round(0, 'floor') - 1) %}
+                                {% else %}
+                                    <a class="page-link"
+                                       href="{{ path('home', {offset: i * 15}) }}">{{ i + 1 }}
+                                    </a>
+                                {% endif %}
                             </li>
                         {% endfor %}
-                        {% if offset < tricks|length - tricks|length - 2 %}
+                        {% if (offset / 15 != nbPages|round(0, 'ceil') - 1) %}
                             <li class="page-item">
                                 <a class="page-link"
                                    href="{{ path('home', {offset: next}) }}">Suivant
@@ -92,6 +95,18 @@
                         {% endif %}
                     </ul>
                 </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 alin-content-center text-center mb-2">
+                offset : {{ dump(offset) }}
+                offset / 15 : {{ dump(offset / 15) }}
+                nbPages : {{ dump(nbPages) }}
+                nbPages arrondi inférieur : {{ dump(nbPages|round(0, 'floor')) }}
+                nbPages arrondi inférieur - 1 : {{ dump(nbPages|round(0, 'floor') - 1) }}
+                nbPages arrondi supérieur : {{ dump(nbPages|round(0, 'ceil')) }}
+                nbPages arrondi supérieur - 1 : {{ dump(nbPages|round(0, 'ceil') - 1) }}
             </div>
         </div>
 
