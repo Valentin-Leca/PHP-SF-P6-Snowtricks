@@ -78,15 +78,12 @@
                         {% endif %}
                         {% for i in 0..nbPages|round(0, 'floor') %}
                             <li class="page-item {% if i == (offset / 15) %}active{% endif %}">
-                                {% if (offset == nbPages|round(0, 'floor') - 1) %}
-                                {% else %}
-                                    <a class="page-link"
-                                       href="{{ path('home', {offset: i * 15}) }}">{{ i + 1 }}
-                                    </a>
-                                {% endif %}
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: i * 15}) }}">{{ i + 1 }}
+                                </a>
                             </li>
                         {% endfor %}
-                        {% if (offset / 15 != nbPages|round(0, 'ceil') - 1) %}
+                        {% if (offset / 15 != nbPages|round(0, 'ceil') ) %}
                             <li class="page-item">
                                 <a class="page-link"
                                    href="{{ path('home', {offset: next}) }}">Suivant
@@ -95,18 +92,6 @@
                         {% endif %}
                     </ul>
                 </nav>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 alin-content-center text-center mb-2">
-                offset : {{ dump(offset) }}
-                offset / 15 : {{ dump(offset / 15) }}
-                nbPages : {{ dump(nbPages) }}
-                nbPages arrondi inférieur : {{ dump(nbPages|round(0, 'floor')) }}
-                nbPages arrondi inférieur - 1 : {{ dump(nbPages|round(0, 'floor') - 1) }}
-                nbPages arrondi supérieur : {{ dump(nbPages|round(0, 'ceil')) }}
-                nbPages arrondi supérieur - 1 : {{ dump(nbPages|round(0, 'ceil') - 1) }}
             </div>
         </div>
 

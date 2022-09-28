@@ -15,13 +15,15 @@ class HomeController extends AbstractController {
 
         $offset = max(0, $request->query->getInt("offset"));
         $tricks = $trickRepository->findTrickPaginated($offset);
+        $nbPages = (ceil(count($tricks) / 15)) - 1;
+
 
         return $this->render('home.html.twig', [
             'offset' => $offset,
             'tricks' => $tricks,
             'previous' => $offset - 15,
             'next' => min(count($tricks), $offset + 15),
-            'nbPages' => ceil(count($tricks)) / 15,
+            'nbPages' => $nbPages,
         ]);
     }
 }
