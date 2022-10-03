@@ -142,7 +142,7 @@
                             </a>
                         </li>
                     {% endfor %}
-                    {% if (offset / 15 != nbPages|round(0, 'ceil')) %}
+                    {% if (offset / 10 != nbPages|round(0, 'ceil')) %}
                         <li class="page-item">
                             <a class="page-link"
                                href="{{ path('app_trick_show', {slug: trick.slug, offset: next}) }}">Suivant
