@@ -54,7 +54,7 @@ class CommentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('c')
             ->innerJoin(Trick::class, 't', 'WITH', 'c.trick = ' . $trick->getId())
             ->setFirstResult($offset)
-            ->setMaxResults(4)
+            ->setMaxResults(10)
             ->getQuery();
 
         return new Paginator($query);

@@ -136,13 +136,13 @@
                         </li>
                     {% endif %}
                     {% for i in 0..nbPages|round(0, 'floor') %}
-                        <li class="page-item {% if i == (offset / 4) %}active{% endif %}">
+                        <li class="page-item {% if i == (offset / 10) %}active{% endif %}">
                             <a class="page-link"
-                               href="{{ path('app_trick_show', {slug: trick.slug, offset: i * 4}) }}">{{ i }}
+                               href="{{ path('app_trick_show', {slug: trick.slug, offset: i * 10}) }}">{{ i + 1 }}
                             </a>
                         </li>
                     {% endfor %}
-                    {% if offset < comments|length %}
+                    {% if (offset / 15 != nbPages|round(0, 'ceil')) %}
                         <li class="page-item">
                             <a class="page-link"
                                href="{{ path('app_trick_show', {slug: trick.slug, offset: next}) }}">Suivant

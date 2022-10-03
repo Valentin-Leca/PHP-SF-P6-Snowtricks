@@ -63,6 +63,7 @@ class TrickController extends AbstractController {
         //paginate comments
         $offset = max(0, $request->query->getInt("offset"));
         $comments = $commentRepository->findCommentPaginated($offset, $trick);
+        $nbPages = (ceil(count($comments) / 10)) - 1;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setUser($this->getUser());
@@ -76,9 +77,9 @@ class TrickController extends AbstractController {
             'offset' => $offset,
             'comments' => $comments,
             'trick' => $trick,
-            'previous' => $offset - 4,
-            'next' => min(count($comments), $offset + 4),
-            'nbPages' => ceil(count($comments)) / 4,
+            'previous' => $offset - 10,
+            'next' => min(count($comments), $offset + 10),
+            'nbPages' => $nbPages,
             'form' => $form,
         ]);
     }
@@ -122,7 +123,9 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO pagination commentaires (10 par pages)
+// TODO pagination commentaires (10 par pages) A TESTER !!!!!
+
+// TODO barre horizontale sur show d'un trick
 
 // TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
 
