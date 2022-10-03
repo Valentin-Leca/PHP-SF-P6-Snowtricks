@@ -122,8 +122,6 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO Re vérifier tous les responsives de toutes les pages
-
 // TODO pagination commentaires (10 par pages)
 
 // TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
