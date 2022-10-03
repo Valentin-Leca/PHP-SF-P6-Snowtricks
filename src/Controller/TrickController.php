@@ -132,8 +132,6 @@ class TrickController extends AbstractController {
 
 // TODO close les issues
 
-// TODO changer userFixtures (mes infos)
-
 // TODO mentions légales : https://www.generer-mentions-legales.com/generateur-mentions-legales.html
 // TODO rajouter checkbox RGPD dans formulaire inscription (avec lien target blank) (mettre value => true par défaut) + autre lien
 // TODO dans le footer

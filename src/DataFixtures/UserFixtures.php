@@ -23,7 +23,7 @@ class UserFixtures extends Fixture {
          $user = new User();
          $user->setLogin("Valentin");
          $user->setPassword($this->userPasswordHasher->hashPassword($user, 'Valentin'));
-         $user->setMail("valentin.val78@hotmail.fr");
+         $user->setMail("mail.test@hotmail.fr");
          $user->setFirstname("Valentin");
          $user->setName("Lecavelier");
          $user->setRegistratedAt(date_create_immutable());
