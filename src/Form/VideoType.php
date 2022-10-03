@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class VideoType extends AbstractType
 {
@@ -20,6 +21,9 @@ class VideoType extends AbstractType
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Lien de votre vidéo (youtube)',
                 ],
+                'constraints' => [
+                    new NotNull(message: 'Ne laissez pas un champ vide.')
+                ]
             ])
         ;
     }

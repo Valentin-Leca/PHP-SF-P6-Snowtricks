@@ -122,6 +122,20 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO Voir avec Thibaut : The "C:\tmp\php57C2.tmp" file does not exist or is not readable lors de l'édition au cas ou
+// TODO Re vérifier tous les responsives de toutes les pages
 
-// TODO problème input image / vidéo vide = trick validé
+// TODO pagination commentaires (10 par pages)
+
+// TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
+
+// TODO Symfony insight
+
+// TODO close les issues
+
+// TODO changer userFixtures (mes infos)
+
+// TODO mentions légales : https://www.generer-mentions-legales.com/generateur-mentions-legales.html
+// TODO rajouter checkbox RGPD dans formulaire inscription (avec lien target blank) (mettre value => true par défaut) + autre lien
+// TODO dans le footer
+
+// assert is true
