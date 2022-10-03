@@ -26,4 +26,10 @@ class HomeController extends AbstractController {
             'nbPages' => $nbPages,
         ]);
     }
+
+    #[Route("/rgpd", name: "app_rgpd", methods: ['GET'])]
+    public function showRgpd(): Response {
+
+        return $this->render('rgpd.html.twig');
+    }
 }

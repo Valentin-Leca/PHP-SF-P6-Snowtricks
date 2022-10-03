@@ -127,11 +127,3 @@ class TrickController extends AbstractController {
 // TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
 
 // TODO Symfony insight
-
-// TODO close les issues
-
-// TODO mentions légales : https://www.generer-mentions-legales.com/generateur-mentions-legales.html
-// TODO rajouter checkbox RGPD dans formulaire inscription (avec lien target blank) (mettre value => true par défaut) + autre lien
-// TODO dans le footer
-
-// assert is true

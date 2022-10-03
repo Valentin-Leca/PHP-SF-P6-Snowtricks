@@ -626,6 +626,10 @@ select:not([multiple]) {
     border: none;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .trick-video {
     max-width: 100%;
     height: 100%;
