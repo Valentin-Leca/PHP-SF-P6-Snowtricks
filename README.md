@@ -1,29 +1,33 @@
 Contexte :
 
-Jimmy Sweat est un entrepreneur ambitieux passionné de snowboard. Son objectif est la création d'un site collaboratif pour faire connaître ce sport auprès du grand public et aider à l'apprentissage des figures (tricks).
+Développement d'un site communautaire de partage de figure de snowboard pour faire connaître ce sport auprès du grand public et aider à l'apprentissage.
 
-Il souhaite capitaliser sur du contenu apporté par les internautes afin de développer un contenu riche et suscitant l’intérêt des utilisateurs du site. Par la suite, Jimmy souhaite développer un business de mise en relation avec les marques de snowboard grâce au trafic que le contenu aura généré.
-
-Pour ce projet, nous allons nous concentrer sur la création technique du site pour Jimmy.
+Pour ce projet, nous allons nous concentrer sur la création technique du site.
 
 Description du besoin : 
 
-Vous êtes chargé de développer le site répondant aux besoins de Jimmy. Vous devez ainsi implémenter les fonctionnalités suivantes : 
+Développer le site répondant aux besoins en implémentant les fonctionnalités suivantes : 
 
-- Un annuaire des figures de snowboard. Vous pouvez vous inspirer de la liste des figures sur Wikipédia. Contentez-vous d'intégrer 10 figures, le reste sera saisi par les internautes ;
+- Un annuaire des figures de snowboard. Intégration de quelques figures, le reste sera saisi par les internautes.
 
-- La gestion des figures (création, modification, consultation).
+- La gestion des figures (création, modification, visualisation).
 
-- Un espace de discussion commun à toutes les figures.
+- Un espace de discussion commun (commentaires) à toutes les figures.
 
 
-Pour implémenter ces fonctionnalités, vous devez créer les pages suivantes :
+Pour implémenter ces fonctionnalités, création des pages suivantes :
 
 
 - La page d’accueil où figurera la liste des figures.
-- 
+ 
 - La page de création d'une nouvelle figure.
-- 
+ 
 - La page de modification d'une figure.
-- 
-- La page de présentation d’une figure (contenant l’espace de discussion commun autour d’une figure).
+ 
+- La page de présentation d’une figure (contenant l’espace de discussion commun autour de la figure).
+
+- La page de création de compte.
+
+- La page d'édition de compte.
+
+- La page des mentions légales.
