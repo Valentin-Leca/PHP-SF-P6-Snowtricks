@@ -123,8 +123,6 @@ class TrickController extends AbstractController {
     }
 }
 
-// TODO pagination commentaires (10 par pages) A TESTER !!!!!
-
 // TODO barre horizontale sur show d'un trick
 
 // TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
