@@ -3,6 +3,7 @@
 /.idea
 .idea/*
 /.idea/*
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -18,7 +19,7 @@ class RegisterMail {
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendRegisterMail($user): void {
+    public function sendRegisterMail(User $user): void {
 
         $email = (new TemplatedEmail())
             ->from('testmailsymfonymailer@gmail.com')
