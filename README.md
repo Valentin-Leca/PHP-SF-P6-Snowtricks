@@ -24,10 +24,14 @@ Pour implémenter ces fonctionnalités, création des pages suivantes :
  
 - La page de modification d'une figure.
  
-- La page de présentation d’une figure (contenant l’espace de discussion commun autour de la figure).
+- La page de visualisation d’une figure (contenant l’espace de discussion commun autour de la figure).
 
-- La page de création de compte.
+- La page d'inscription.
 
-- La page d'édition de compte.
+- La page d'édition de compte utilisateur.
+
+- Une page d'index des figures correspondant à l'utilisateur connecté.
+
+- La page de connexion.
 
 - La page des mentions légales.
