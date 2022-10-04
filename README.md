@@ -1,4 +1,4 @@
-Contexte :
+Récapitulatif :
 
 Développement d'un site communautaire de partage de figure de snowboard pour faire connaître ce sport auprès du grand public et aider à l'apprentissage.
 
@@ -35,3 +35,36 @@ Pour implémenter ces fonctionnalités, création des pages suivantes :
 - La page de connexion.
 
 - La page des mentions légales.
+
+
+
+Outils Requis :
+
+- PHP version >= 8.0
+
+- Composer version >= 2.4.1
+
+- Symfony CLI version >= 5.4.13
+
+- WampServer
+
+- MySQL
+
+- PHPMyAdmin
+
+
+
+Installation : 
+
+- Ouvrez une interface de commande et cloner le repository dans un dossier ( "git clone https://github.com/Valentin-Leca/PHP-SF-Snowtricks.git" )
+
+- Se placer à la racine du projet et faire un "composer install" pour installer tous les bundles associés au projet présent dans le fichier composer.lock
+
+- Faire la commande "php bin/console doctrine:schema:create" pour créer la base de donnée.
+
+- Lancer la commande "symfony console doctrine:fixtures:load" pour créer les données de test (compte utilisateur, figure, commentaires ...)
+
+Une fois ces étapes réalisées, lancer WampServer puis faites "symfony serve -d" en ligne de commande à la racine du projet.
+
+Rendez-vous sur votre navigateur, en localhost (port par défaut de Symfony : 8000) -> https://127.0.0.1:8000/ ou alors https://localhost:8000/ et découvrez le site !
+
