@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,6 +47,18 @@ class CommentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function findCommentPaginated(int $offset, $trick): Paginator {
+
+        $query = $this->createQueryBuilder('c')
+            ->innerJoin(Trick::class, 't', 'WITH', 'c.trick = ' . $trick->getId())
+            ->setFirstResult($offset)
+            ->setMaxResults(10)
+            ->getQuery();
+
+        return new Paginator($query);
+
     }
 
 //    /**

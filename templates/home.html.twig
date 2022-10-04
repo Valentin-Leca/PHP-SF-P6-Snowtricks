@@ -4,237 +4,106 @@
 
     <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ asset('assets/img/tricks-img.jpg') }}">
         <h1>Deviens le roi du Freestyle !</h1>
-        <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
-            <i class="fas fa-arrow-down"></i>
-        </button>
+        <a href="#last-trick">
+            <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
+                <i class="fas fa-arrow-down"></i>
+            </button>
+        </a>
     </div>
 
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
-        <div class="row mb-4">
-            <h2 class="col-12 tm-text-primary">
+        <div class="row mb-2">
+            {% for message in app.flashes('success') %}
+                <div class="mb-2 text-center alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <h2 class="col-12 tm-text-primary" id="last-trick">
                 Dernières Figures
             </h2>
         </div>
         <div class="row tm-mb-90 tm-gallery">
-            <div class="col-xl-1"></div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-03.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Trick Group</h2>
-                        <a href="{{ path('app_trick_index') }}">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
+            {% set index = 0 %}
+            {% for trick in tricks %}
+                {% if (index == 0) %}
+                    <div class="col-xl-1 only-xl"></div>
+                {% endif %}
+                {% if (index == 5) or (index == 10) %}
+                    <div class="col-xl-1 only-xl"></div>
+                    <div class="col-xl-1 only-xl"></div>
+                {% endif %}
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                    <figure class="effect-ming tm-video-item">
+                            <img src="{{ 'assets/tricks-img/' ~ trick.images[0].imagename }}" alt="Image" class="img-fluid trick-img">
+                        <figcaption class="d-flex align-items-center justify-content-center">
+                            <h2>{{ trick.grouptrick }}</h2>
+                            <a href="{{ path('app_trick_show',{'slug':trick.slug}) }}">Voir plus</a>
+                        </figcaption>
+                    </figure>
+                        {% if app.user %}
+                            {% if app.user.login == trick.user.login %}
+                                <div class="d-flex justify-content-between tm-text-gray">
+                                    <span>{{ trick.name|slice(0,10) }}{% if trick.name|length > 10 %}...{% endif %}</span>
+                                    <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
+                                    <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button type="submit" class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
+                                    </form>
+                                </div>
+                            {% else %}
+                                <div class="d-flex justify-content-center tm-text-gray">
+                                    <span>{{ trick.name }}</span>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="d-flex justify-content-center tm-text-gray">
+                                <span>{{ trick.name }}</span>
+                            </div>
+                        {% endif %}
                 </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-04.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Plants</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-05.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Morning</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-06.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Pinky</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-01.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Hangers</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-1"></div>
+                {% set index = index + 1 %}
+            {% endfor %}
+        </div>
 
-            <div class="col-xl-1"></div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-02.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Perfumes</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
+        <div class="row">
+            <div class="col-12 alin-content-center text-center mb-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if offset > 0  %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: previous}) }}">Précédent
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in 0..nbPages|round(0, 'floor') %}
+                            <li class="page-item {% if i == (offset / 15) %}active{% endif %}">
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: i * 15}) }}">{{ i + 1 }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        {% if (offset / 15 != nbPages|round(0, 'ceil') ) %}
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="{{ path('home', {offset: next}) }}">Suivant
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-07.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Bus</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-08.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>New York</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-09.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Abstract</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-10.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Flowers</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-1"></div>
+        </div>
 
-            <div class="col-xl-1"></div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-11.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Rosy</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
+        <div class="row">
+            <div class="col-12 alin-content-end text-right mb-2">
+                <a href="#last-trick">
+                    <button type="button" class="btn btn-dark btn-floating btn-lg btn-up">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </a>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-12.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Rocki</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-13.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Purple</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-14.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Sea</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-                <figure class="effect-ming tm-video-item">
-                    <img src="assets/img/img-15.jpg" alt="Image" class="img-fluid">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Turtle</h2>
-                        <a href="photo-detail.html">View more</a>
-                    </figcaption>
-                </figure>
-                <div class="d-flex justify-content-between tm-text-gray">
-                    <span>trick-name</span>
-                    <span><i class="fa-solid fa-pen"></i></span>
-                    <span><i class="fa-solid fa-trash-can"></i></span>
-                </div>
-            </div>
-            <div class="col-xl-1"></div>
-        </div> <!-- row -->
+        </div>
     </div>
 
 {% endblock %}

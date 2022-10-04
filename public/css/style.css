@@ -86,7 +86,7 @@
         border-radius: 50%;
         position: absolute;
         bottom: 135px;
-        right: 20px;
+        right: 14px;
     }
 
     #loader-wrapper .loader-section {
@@ -162,15 +162,21 @@ a:hover { color:#009999; }
     font-size: 1.2rem;
 }
 
+.btn-up {
+    border-radius: 50%;
+}
+
 .btn-primary:hover,
 .btn-primary:focus {
     background-color:#086969;
 }
 
 #trick_grouptrick {
-    width: 125px;
+    width: 150px;
     color: black !important;
 }
+
+
 
 .label_trick_grouptrick {
     color: #009999 !important;
@@ -498,6 +504,10 @@ figure.effect-ming:hover img { opacity: 0.4; }
     color: #e1e1e1;
 }
 
+.table-text {
+    font-size: 80%;
+}
+
 .tm-video-details {
     height: 100%;
     padding: 40px;
@@ -606,6 +616,81 @@ select:not([multiple]) {
     color: red;
 }
 
+.fa-pen, .trash-can, .trick-delete {
+    color: #999 !important;
+    border: none;
+    background-color: white;
+}
+
+.trick-delete:active {
+    border: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.trick-video {
+    max-width: 100%;
+    height: 100%;
+}
+
+.text-comment {
+    border: 1px solid black;
+    padding: 0.5rem;
+}
+
+.avatar-comment {
+    width: 65px;
+    height: 65px;
+}
+
+.trick-img {
+    object-fit: cover;
+}
+
+.main-img-trick {
+    position: relative;
+}
+
+.trick-buttons {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    background-color: white;
+    padding: 0 0.5rem 0 0.8rem;
+}
+
+@media (min-width: 1200px) {
+    .trick-img, .trick-video {
+        height: 200px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .trick-img, .trick-video {
+        height: 250px !important;
+    }
+}
+
+@media (min-width: 575px) and (max-width: 992px) {
+    .trick-img, .trick-video {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .trick-img, .trick-video {
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .only-xl {
+        display: none !important;
+    }
+}
+
 @media (max-width: 991px) {
     .navbar-collapse {
         position: fixed;
@@ -644,6 +729,20 @@ select:not([multiple]) {
     }
 
     .tm-people-row { max-width: 420px; }
+}
+
+.see-tricks {
+    display: none;
+}
+
+@media screen and (min-width: 0px) and (max-width: 425px) {
+    .see-tricks {
+        display: block !important;
+    }
+
+    .trick-medias {
+        display: none;
+    }
 }
 
 @media (max-width: 400px) {

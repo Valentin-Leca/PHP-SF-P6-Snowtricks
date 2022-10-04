@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid tm-mt-60 text-center">
+        <div class="row mb-1">
+            <div class="col-12 justify-content-center align-items-center">
+                <h1>Il y a comme un problème ...</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    Le serveur a rencontré un problème inattendu qui l'empêche de répondre à la requête.
+                    <a href="{{ path('home') }}">retournez à la page d'accueil</a>.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ asset('assets/img/snowboard-fall.jpg') }}">
+            </div>
+        </div>
+    </div>
+{% endblock %}

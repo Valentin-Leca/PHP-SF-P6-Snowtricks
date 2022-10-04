@@ -1,8 +1,8 @@
 <footer class="tm-bg-gray pt-5 pb-3 tm-text-gray tm-footer">
     <div class="container-fluid tm-container-small">
-        <div class="row">
-            <div class="col-lg-12 col-md-6 col-sm-6 col-12 px-5 mb-5">
-                <ul class="tm-social-links d-flex justify-content-center pl-0 mb-2">
+        <div class="row text-center">
+            <div class="col-12 px-5 mb-5">
+                <ul class="tm-social-links d-flex justify-content-center pl-0">
                     <li class="mb-2"><a href="https://facebook.com"><i class="fab fa-facebook"></i></a></li>
                     <li class="mb-2"><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
                     <li class="mb-2"><a href="https://instagram.com"><i class="fab fa-instagram"></i></a></li>
@@ -11,8 +11,11 @@
             </div>
         </div>
         <div class="row text-center">
+            <div class="col-4 offset-4">
+                <a href="{{ path('app_rgpd') }}" class="link-info" target="_blank">Mentions Légales</a>
+            </div>
             <div class="col-lg-2"></div>
-            <div class="col-lg-8 col-md-7 col-12 px-5 mb-3">
+            <div class="col-12 px-5 mt-3 mb-3">
                 Copyright &copy; Snowtricks Valentin Lecavelier Des Etangs
                 2022 - {{ "now" | date("Y", "Europe/Paris") }}
             </div>
