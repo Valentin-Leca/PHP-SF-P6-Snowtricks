@@ -125,6 +125,8 @@ class TrickController extends AbstractController {
 
 // TODO barre horizontale sur show d'un trick
 
-// TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
+// TODO Voir ReadMe avec Thibaut
 
 // TODO Symfony insight
+
+// TODO page edit voir image bloquante

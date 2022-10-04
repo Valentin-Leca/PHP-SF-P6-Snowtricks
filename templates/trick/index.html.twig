@@ -6,6 +6,9 @@
         <div class="row tm-mb-50 log-body">
             <div class="col-lg-10 offset-lg-1 col-12 mb-5 text-center">
                 <h2 class="tm-text-primary mt-5 mb-5">Index des Figures</h2>
+                <div class="form-group tm-text-right text-center">
+                    <a href="{{ path('app_trick_new') }}"><button type="submit" class="btn btn-primary">Créer une figure</button></a>
+                </div>
                 <table class="table table-text">
                     <thead>
                     <tr>
@@ -41,7 +44,4 @@
         </div>
     </div>
 
-
-
-    <a href="{{ path('app_trick_new') }}">Create new</a>
 {% endblock %}

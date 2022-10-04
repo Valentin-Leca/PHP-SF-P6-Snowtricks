@@ -71,7 +71,7 @@ class LoginController extends AbstractController {
                 $user->setPassword($hasher->hashPassword($user, $firstPassword));
                 $entityManager->flush();
                 $this->addFlash(type: "success", message: "Votre mot de passe a bien été modifié !");
-                return $this->redirectToRoute('login');
+                return $this->redirectToRoute('home');
             } else {
                 $this->addFlash(type: "error", message: "Vos deux mots de passes ne sont pas identiques !");
                 return $this->redirectToRoute('resetPassword', ['login' => $user->getLogin(),
