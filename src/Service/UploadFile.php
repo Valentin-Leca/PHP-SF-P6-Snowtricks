@@ -66,7 +66,6 @@ class UploadFile {
 
             $check = parse_url($video->getVideoname(), PHP_URL_HOST);
             parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
-            dump($video);
 
             if ($check === "www.youtube.com" && array_key_exists('v', $videoId)) {
                 $this->videoId($video);
