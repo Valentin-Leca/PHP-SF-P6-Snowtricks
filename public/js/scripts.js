@@ -40,12 +40,17 @@ SOFTWARE.
  //# sourceMappingURL=bootstrap.bundle.min.js.map
 
 //Get the button
-let mybutton = document.getElementById("btn-back-to-top");
+let mybutton = document.getElementById("see-tricks");
 
 // When the user clicks on the button, scroll to the top of the document
-mybutton.addEventListener("click", backToTop);
+mybutton.addEventListener("click", hideAndShow);
 
-function backToTop() {
- document.body.scrollTop = 825;
- document.documentElement.scrollTop = 825;
+function hideAndShow() {
+ if (mybutton.textContent === "Voir les médias") {
+  mybutton.textContent = "Masquer les médias"
+  document.getElementById("trick-medias").style.display = "block";
+ } else {
+  mybutton.textContent = "Voir les médias"
+  document.getElementById("trick-medias").style.display = "none";
+ }
 }

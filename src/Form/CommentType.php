@@ -2,28 +2,22 @@
 
 namespace App\Form;
 
-use App\Entity\Video;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotNull;
 
-class VideoType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('videoname', TextType::class, [
-                'label' => false,
-                'required' => false,
+            ->add('content', TextareaType::class, [
                 'attr' => [
                     'class' =>'form-control rounded-0',
-                    'placeholder' => 'Lien de votre vidéo (youtube)',
+                    'placeholder' => 'Votre commentaire',
                 ],
-                'constraints' => [
-                    new NotNull(message: 'Ne laissez pas un champ vide.')
-                ]
             ])
         ;
     }
@@ -31,7 +25,7 @@ class VideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Video::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

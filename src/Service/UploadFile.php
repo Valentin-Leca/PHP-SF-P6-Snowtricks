@@ -26,7 +26,7 @@ class UploadFile {
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
             try {
-                $file->move($this->targetDirectory, $fileName);
+                $file->move($this->getTargetDirectory(), $fileName);
             } catch (FileException $e) {
                 return $e->getMessage();
             }
@@ -39,8 +39,8 @@ class UploadFile {
 
             if ($image->getFile() !== null) {
                 $image->setImagename($this->renameImage($image->getFile()));
-            } else {
-                return false;
+            } elseif ($image->getImagename() === null && $image->getFile() === null) {
+                $trick->removeImage($image);
             }
         }
     }
@@ -61,17 +61,23 @@ class UploadFile {
     }
 
     public function uploadVideo(Trick $trick) {
+
         foreach ($trick->getVideos() as $video) {
 
             $check = parse_url($video->getVideoname(), PHP_URL_HOST);
             parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
+            dump($video);
 
             if ($check === "www.youtube.com" && array_key_exists('v', $videoId)) {
                 $this->videoId($video);
                 $trick->addVideo($video);
-            } else {
-                return false;
+            } elseif ($video->getVideoname() === null || $video->getVideoId() === null) {
+                $trick->removeVideo($video);
             }
         }
+    }
+
+    public function getTargetDirectory(): string {
+        return $this->targetDirectory;
     }
 }

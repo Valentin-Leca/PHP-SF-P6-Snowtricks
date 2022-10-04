@@ -50,8 +50,8 @@ class TrickType extends AbstractType
                 'label' => false,
                 'allow_delete' => true,
                 'constraints' => [
-                    new Count(min: 1, max: 5, minMessage: 'Vous devez ajouter au moins une image.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 5 images.',),
+                    new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une image.',
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 images.',),
                     new Valid(),
                 ],
             ])
@@ -66,8 +66,8 @@ class TrickType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'constraints' => [
-                    new Count(min: 1, max: 5, minMessage: 'Vous devez ajouter au moins une vidéo.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 5 vidéos.',)
+                    new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une vidéo.',
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 vidéos.',)
                 ],
             ])
         ;

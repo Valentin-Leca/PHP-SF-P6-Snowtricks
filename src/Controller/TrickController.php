@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +21,6 @@ class TrickController extends AbstractController {
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response {
 
-        // TODO bouger le trickrepository->findAll() dans le homeCOntroller
         return $this->render('trick/index.html.twig', [
             'tricks' => $trickRepository->findBy(['user' => $this->getUser()]),
         ]);
@@ -38,19 +40,11 @@ class TrickController extends AbstractController {
             $trick->setSlug(strtolower($slug));
             $trick->setUser($this->getUser());
 
-            if ($uploadFile->uploadVideo($trick) === false) {
-                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
-                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-            } elseif ($uploadFile->uploadImage($trick) === false) {
-                $this->addFlash("error", "Veuillez renseigner tous les champs images.");
-                return $this->redirectToRoute('app_trick_new', [], Response::HTTP_SEE_OTHER);
-            } else {
-                $uploadFile->uploadImage($trick);
-                $uploadFile->uploadVideo($trick);
-                $trickRepository->add($trick, true);
+            $uploadFile->uploadImage($trick);
+            $uploadFile->uploadVideo($trick);
+            $trickRepository->add($trick, true);
 
-                return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
-            }
+            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -59,11 +53,34 @@ class TrickController extends AbstractController {
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response {
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Trick $trick, CommentRepository $commentRepository): Response {
 
-        return $this->render('trick/show.html.twig', [
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        //paginate comments
+        $offset = max(0, $request->query->getInt("offset"));
+        $comments = $commentRepository->findCommentPaginated($offset, $trick);
+        $nbPages = (ceil(count($comments) / 10)) - 1;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setTrick($trick);
+            $commentRepository->add($comment, true);
+
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('trick/show.html.twig', [
+            'offset' => $offset,
+            'comments' => $comments,
             'trick' => $trick,
+            'previous' => $offset - 10,
+            'next' => min(count($comments), $offset + 10),
+            'nbPages' => $nbPages,
+            'form' => $form,
         ]);
     }
 
@@ -81,19 +98,11 @@ class TrickController extends AbstractController {
             $trick->setSlug(strtolower($slug));
             $trick->setUpdatedAt(date_create_immutable());
 
-            if ($uploadFile->uploadVideo($trick) === false) {
-                $this->addFlash("error", "Veuillez ajouter un lien de vidéo qui provient bien de Youtube.");
-                return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
-            } elseif ($uploadFile->uploadImage($trick) === false) {
-                $this->addFlash("error", "Veuillez renseigner tous les champs images que vous ajoutez.");
-                return $this->redirectToRoute('app_trick_edit', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
-            } else {
-                $uploadFile->uploadImage($trick);
-                $uploadFile->uploadVideo($trick);
-                $trickRepository->add($trick, true);
+            $uploadFile->uploadImage($trick);
+            $uploadFile->uploadVideo($trick);
+            $trickRepository->add($trick, true);
 
-                return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
-            }
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -102,13 +111,20 @@ class TrickController extends AbstractController {
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/delete/{slug}', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response {
 
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $trickRepository->remove($trick, true);
         }
 
-        return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+        $this->addFlash("success", "Votre figure a bien été supprimée.");
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
+
+// TODO barre horizontale sur show d'un trick
+
+// TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
+
+// TODO Symfony insight
