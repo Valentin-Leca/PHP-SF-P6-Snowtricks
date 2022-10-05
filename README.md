@@ -48,7 +48,7 @@ Outils Requis :
 
 - WampServer
 
-- MySQL
+- MySQL version >= 8.0.29
 
 - PHPMyAdmin
 
