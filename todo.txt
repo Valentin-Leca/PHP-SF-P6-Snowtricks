@@ -1,9 +1,3 @@
-Barre horizontale sur show d'un trick
-
 Voir ReadMe avec Thibaut
 
-Symfony insight
-
 Page edit voir image bloquante
-
-HTML ajouter accept pour n'afficher que les bonnes extensions (création trick)
