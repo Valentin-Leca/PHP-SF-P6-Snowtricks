@@ -19,7 +19,11 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
         $trickNameRotations = ['180', '360', '540', '720', '900', '1080'];
         $trickNameFlips = ['Front-Flip', 'Back-Flip'];
         $trickNameSlides = ['Shifty', 'Spray', 'Slide'];
-        $comments = ['Super, j\'adore cette figure !', 'Vivement la prochaine !', 'Trop difficile à faire celle-ci ^_^'];
+        $comments = ['Super, j\'adore cette figure !', 'Vivement la prochaine !', 'Trop difficile à faire celle-ci ^_^',
+            'Cette figure ressemble à la précédente.', 'Je me suis cassé la jambe en essayant :(', 'Je l\'ai réussi du premier coup !',
+            'Je pense que personne au monde ne peut la faire.', 'J\'ai pas compris comment bien attérir à la fin.',
+            'C\'est la figure que le champion du monde a fait !', 'Il me semble qu\'elle n\'est pas facile.',
+            'Vivement des figures très difficiles !'];
         $videoLinks = ['https://www.youtube.com/watch?v=arzLq-47QFA', 'https://www.youtube.com/watch?v=eGJ8keB1-JM',
             'https://www.youtube.com/watch?v=BVeAbNIHktE'];
         $trickContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel purus id nulla pulvinar dapibus.
@@ -48,7 +52,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $image = new Image();
                 $image->setImagename("Snowboard-".rand(1, 3).".jpg");
                 $image->setTricksId($trick);
-                $image->setFile(NULL);
+                $image->setFile((object)NULL);
                 $manager->persist($image);
             }
 
@@ -60,7 +64,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $manager->persist($video);
             }
 
-            for($i = 0; $i < 3; $i++) {
+            for($i = 0; $i < 11; $i++) {
                 $comment = new Comment();
                 $comment->setContent($comments[$i]);
                 $comment->setTrick($trick);
@@ -85,7 +89,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $image = new Image();
                 $image->setImagename("Snowboard-".rand(1, 3).".jpg");
                 $image->setTricksId($trick);
-                $image->setFile(NULL);
+                $image->setFile((object)NULL);
                 $manager->persist($image);
             }
 
@@ -97,7 +101,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $manager->persist($video);
             }
 
-            for($i = 0; $i < 3; $i++) {
+            for($i = 0; $i < 11; $i++) {
                 $comment = new Comment();
                 $comment->setContent($comments[$i]);
                 $comment->setTrick($trick);
@@ -122,7 +126,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $image = new Image();
                 $image->setImagename("Snowboard-".rand(1, 3).".jpg");
                 $image->setTricksId($trick);
-                $image->setFile(NULL);
+                $image->setFile((object)NULL);
                 $manager->persist($image);
             }
 
@@ -134,7 +138,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $manager->persist($video);
             }
 
-            for($i = 0; $i < 3; $i++) {
+            for($i = 0; $i < 11; $i++) {
                 $comment = new Comment();
                 $comment->setContent($comments[$i]);
                 $comment->setTrick($trick);
@@ -159,7 +163,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $image = new Image();
                 $image->setImagename("Snowboard-".rand(1, 3).".jpg");
                 $image->setTricksId($trick);
-                $image->setFile(NULL);
+                $image->setFile((object)NULL);
                 $manager->persist($image);
             }
 
@@ -171,7 +175,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface {
                 $manager->persist($video);
             }
 
-            for($i = 0; $i < 3; $i++) {
+            for($i = 0; $i < 11; $i++) {
                 $comment = new Comment();
                 $comment->setContent($comments[$i]);
                 $comment->setTrick($trick);
