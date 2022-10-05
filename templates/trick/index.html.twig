@@ -9,6 +9,11 @@
                 <div class="form-group tm-text-right text-center">
                     <a href="{{ path('app_trick_new') }}"><button type="submit" class="btn btn-primary">Créer une figure</button></a>
                 </div>
+                {% for message in app.flashes('success') %}
+                    <div class="mb-2 text-center alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 <table class="table table-text">
                     <thead>
                     <tr>

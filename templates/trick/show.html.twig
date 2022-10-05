@@ -30,6 +30,12 @@
             </div>
         </div>
 
+        {% for message in app.flashes('success') %}
+            <div class="mb-2 text-center alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="row tm-gallery trick-medias" id="trick-medias">
             {% for image in trick.images|slice(0,3) %}
                 <div class="col-xl-2 col-lg-4 col-md-6 col-sm-6 col-12 mb-2">

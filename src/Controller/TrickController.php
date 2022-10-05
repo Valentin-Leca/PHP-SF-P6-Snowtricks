@@ -46,6 +46,7 @@ class TrickController extends AbstractController {
             $uploadFile->uploadVideo($trick);
             $trickRepository->add($trick, true);
 
+            $this->addFlash("success", "Votre figure a bien été créée.");
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -104,6 +105,7 @@ class TrickController extends AbstractController {
             $uploadFile->uploadVideo($trick);
             $trickRepository->add($trick, true);
 
+            $this->addFlash("success", "Votre figure a bien été modifiée.");
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
