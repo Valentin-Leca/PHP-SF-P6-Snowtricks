@@ -49,7 +49,7 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
-    public function findCommentPaginated(int $offset, $trick): Paginator {
+    public function findCommentPaginated(int $offset,object $trick): Paginator {
 
         $query = $this->createQueryBuilder('c')
             ->innerJoin(Trick::class, 't', 'WITH', 'c.trick = ' . $trick->getId())
