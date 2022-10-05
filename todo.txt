@@ -1,0 +1,7 @@
+Barre horizontale sur show d'un trick
+
+Voir ReadMe avec Thibaut
+
+Symfony insight
+
+Page edit voir image bloquante

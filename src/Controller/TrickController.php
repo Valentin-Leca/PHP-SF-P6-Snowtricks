@@ -122,11 +122,3 @@ class TrickController extends AbstractController {
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
-
-// TODO barre horizontale sur show d'un trick
-
-// TODO Voir ReadMe avec Thibaut
-
-// TODO Symfony insight
-
-// TODO page edit voir image bloquante

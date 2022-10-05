@@ -33,7 +33,7 @@ class UploadFile {
             return $fileName;
     }
 
-    public function uploadImage(Trick $trick) {
+    public function uploadImage(Trick $trick): void {
 
         foreach ($trick->getImages() as $image) {
 
@@ -45,7 +45,7 @@ class UploadFile {
         }
     }
 
-    public function videoId(Video $video) {
+    public function videoId(Video $video): string {
 
         $originalUrl = $video->getVideoname();
         parse_str(parse_url($video->getVideoname(), PHP_URL_QUERY), $videoId);
@@ -58,9 +58,10 @@ class UploadFile {
                 return $e->getMessage();
             }
         }
+        return $video->getVideoId();
     }
 
-    public function uploadVideo(Trick $trick) {
+    public function uploadVideo(Trick $trick): void {
 
         foreach ($trick->getVideos() as $video) {
 

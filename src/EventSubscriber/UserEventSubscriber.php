@@ -11,7 +11,8 @@ class UserEventSubscriber implements EventSubscriberInterface {
 
     // Exemple non utilisé dans le code
 
-    public function onLogin(AuthenticationSuccessEvent $event) {
+    public function onLogin(AuthenticationSuccessEvent $event): void
+    {
 
         $user = $event->getAuthenticationToken()->getUser();
 
