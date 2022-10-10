@@ -7,11 +7,13 @@
     <div class="container-fluid tm-container-content tm-mt-60 text-center">
         <div class="col-xl-8 offset-xl-2 col-lg-10 offset-1 col-md-10 col-sm-10 col-10 main-img-trick">
             <div class="d-flex trick-buttons">
-                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
-                <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                    <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
-                </form>
+                {% if (app.user) and (app.user.login == trick.user.login) %}
+                    <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><i class="fa-solid fa-pen"></i></a>
+                    <form method="post" action="{{ path('app_trick_delete', {'slug': trick.slug}) }}" onsubmit="return confirm('Êtes-vous sur de vouloir supprimer cette figure ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                        <button class="trick-delete"><i class="fa-solid fa-trash-can trash-can"></i></button>
+                    </form>
+                {% endif %}
             </div>
             <div class="tm-hero d-flex justify-content-center align-items-center img-background-accueil" data-parallax="scroll" data-image-src="{{ '../assets/tricks-img/' ~ trick.images[0].imagename }}">
                 <h1>{{ trick.name }}</h1>
@@ -27,6 +29,12 @@
                 <button class="btn btn-primary see-tricks" id="see-tricks">Voir les médias</button>
             </div>
         </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="mb-2 text-center alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <div class="row tm-gallery trick-medias" id="trick-medias">
             {% for image in trick.images|slice(0,3) %}
@@ -63,9 +71,11 @@
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
                 <p>Créé le :<br/>{{ trick.createdat|date('d-m-Y') }}</p>
             </div>
+            {% if trick.updatedat is not null %}
             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-3">
-                <p>Modifié le : {% if trick.updatedat is not null %}{{ trick.updatedat|date('d-m-Y') }}{% endif %}<br/></p>
+                <p>Modifié le :<br/>{{ trick.updatedat|date('d-m-Y') }}<br/></p>
             </div>
+            {% endif %}
             <div class="col-xl-2 col-lg-2 col-md-2"></div>
         </div>
     </div>
@@ -124,34 +134,38 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 alin-content-center text-center mb-2">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    {% if offset > 0  %}
-                        <li class="page-item">
-                            <a class="page-link"
-                               href="{{ path('app_trick_show', {slug: trick.slug, offset: previous}) }}">Précédent
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% for i in 0..nbPages|round(0, 'floor') %}
-                        <li class="page-item {% if i == (offset / 10) %}active{% endif %}">
-                            <a class="page-link"
-                               href="{{ path('app_trick_show', {slug: trick.slug, offset: i * 10}) }}">{{ i + 1 }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                    {% if (offset / 10 != nbPages|round(0, 'ceil')) %}
-                        <li class="page-item">
-                            <a class="page-link"
-                               href="{{ path('app_trick_show', {slug: trick.slug, offset: next}) }}">Suivant
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+    {% if comments.count > 0 %}
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-12 alin-content-center text-center mb-2">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {% if offset > 0  %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="{{ path('app_trick_show', {slug: trick.slug, offset: previous}) }}">Précédent
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% for i in 0..nbPages|round(0, 'floor') %}
+                                <li class="page-item {% if i == (offset / 10) %}active{% endif %}">
+                                    <a class="page-link"
+                                       href="{{ path('app_trick_show', {slug: trick.slug, offset: i * 10}) }}">{{ i + 1 }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% if (offset / 10 != nbPages|round(0, 'ceil')) %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="{{ path('app_trick_show', {slug: trick.slug, offset: next}) }}">Suivant
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
 {% endblock %}

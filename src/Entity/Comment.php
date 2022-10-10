@@ -15,7 +15,6 @@ class Comment
     private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
     private string $content;
 

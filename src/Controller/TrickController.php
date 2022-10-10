@@ -9,6 +9,8 @@ use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Service\UploadFile;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,7 @@ class TrickController extends AbstractController {
     public function index(TrickRepository $trickRepository): Response {
 
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findBy(['user' => $this->getUser()]),
+            'tricks' => $trickRepository->findBy(['user' => $this->getUser()], ['createdAt' => 'DESC']),
         ]);
     }
 
@@ -30,7 +32,7 @@ class TrickController extends AbstractController {
     public function new(Request $request, UploadFile $uploadFile, TrickRepository $trickRepository): Response {
 
         $trick = new Trick();
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['validation_groups' => 'trick_new']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,6 +46,7 @@ class TrickController extends AbstractController {
             $uploadFile->uploadVideo($trick);
             $trickRepository->add($trick, true);
 
+            $this->addFlash("success", "Votre figure a bien été créée.");
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -88,7 +91,7 @@ class TrickController extends AbstractController {
     public function edit(Request $request, UploadFile $uploadFile, Trick $trick, TrickRepository $trickRepository): Response {
 
         $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['validation_groups' => 'trick_edit']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,6 +105,7 @@ class TrickController extends AbstractController {
             $uploadFile->uploadVideo($trick);
             $trickRepository->add($trick, true);
 
+            $this->addFlash("success", "Votre figure a bien été modifiée.");
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
@@ -111,10 +115,14 @@ class TrickController extends AbstractController {
         ]);
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     #[Route('/delete/{slug}', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response {
 
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid(sprintf('delete%s', $trick->getId()), $request->request->get('_token'))) {
             $trickRepository->remove($trick, true);
         }
 
@@ -122,9 +130,3 @@ class TrickController extends AbstractController {
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
-
-// TODO barre horizontale sur show d'un trick
-
-// TODO Read me 1 : récap 2 : requirements (mysql, php ...) 3 : install du projet
-
-// TODO Symfony insight

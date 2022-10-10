@@ -32,7 +32,7 @@ class Image
         return $this->imagename;
     }
 
-    public function setImagename($imagename): self
+    public function setImagename(string $imagename): self
     {
         $this->imagename = $imagename;
 
@@ -51,12 +51,12 @@ class Image
         return $this;
     }
 
-    public function getFile()
+    public function getFile(): ?object
     {
         return $this->file;
     }
 
-    public function setFile($file): self
+    public function setFile(object $file): self
     {
         $this->file = $file;
 

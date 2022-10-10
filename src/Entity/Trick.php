@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity(fields:["name"], message: "Ce nom de figure existe déjà.")]
+#[UniqueEntity(fields:["name"], message: "Ce nom de figure existe déjà.", groups: ["trick_new", "trick_edit"])]
 class Trick
 {
     #[ORM\Id]
@@ -27,12 +27,12 @@ class Trick
         max: 50,
         minMessage: "Le nom de votre figure doit avoir au moins {{ limit }} caractères.",
         maxMessage: "Le nom de votre figure ne peut pas excéder {{ limit }} caractères.")]
-    private string $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotNull(message: "Ce champ ne doit pas être vide.")]
     #[Assert\NotBlank(message: "Ce champ ne doit pas être vide.")]
-    private string $content;
+    private ?string $content;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $createdAt;
@@ -83,7 +83,7 @@ class Trick
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): ?self
     {
         $this->name = $name;
 
@@ -95,7 +95,7 @@ class Trick
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): ?self
     {
         $this->content = $content;
 

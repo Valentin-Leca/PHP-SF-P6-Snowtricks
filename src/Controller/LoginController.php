@@ -25,8 +25,11 @@ class LoginController extends AbstractController {
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/logout', name: 'logout', methods: ['GET'])]
-    public function logout() {
+    public function logout(): void {
         // controller can be blank: it will never be called!
         throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
@@ -59,7 +62,7 @@ class LoginController extends AbstractController {
 
     #[Route('/resetPassword/{login}/{token}', name: 'resetPassword', methods: ['GET', 'POST'])]
     public function resetPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface
-    $entityManager, User $user) {
+    $entityManager, User $user): Response {
 
         if ($request->isMethod('POST')) {
 
@@ -71,12 +74,12 @@ class LoginController extends AbstractController {
                 $user->setPassword($hasher->hashPassword($user, $firstPassword));
                 $entityManager->flush();
                 $this->addFlash(type: "success", message: "Votre mot de passe a bien été modifié !");
-                return $this->redirectToRoute('login');
+                return $this->redirectToRoute('home');
             } else {
                 $this->addFlash(type: "error", message: "Vos deux mots de passes ne sont pas identiques !");
                 return $this->redirectToRoute('resetPassword', ['login' => $user->getLogin(),
-                    'token' => $user->getToken
-                ()]);
+                    'token' => $user->getToken()
+                ]);
             }
         }
 

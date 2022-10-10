@@ -17,7 +17,7 @@ class UserFormHandler {
         $this->hasher = $hasher;
     }
 
-    public function setAndFlushUserForm(User $user, $form): void {
+    public function setAndFlushUserForm(User $user, object $form): void {
 
         if (!empty($form->getData()['password'])) {
             $user->setPassword($this->hasher->hashPassword($user, $form->getData()['password']));

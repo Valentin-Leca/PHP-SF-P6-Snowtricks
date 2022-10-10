@@ -49,7 +49,7 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
-    public function findCommentPaginated(int $offset, $trick): Paginator {
+    public function findCommentPaginated(int $offset,object $trick): Paginator {
 
         $query = $this->createQueryBuilder('c')
             ->innerJoin(Trick::class, 't', 'WITH', 'c.trick = ' . $trick->getId())
@@ -60,29 +60,4 @@ class CommentRepository extends ServiceEntityRepository
         return new Paginator($query);
 
     }
-
-//    /**
-//     * @return Comment[] Returns an array of Comment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Comment
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -25,3 +25,8 @@ document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("cl
 // delete the input already existing at edition
 document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".div-input-images").remove()));
 document.querySelectorAll('.btn-remove').forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".input-video").remove()));
+
+document.getElementById('btn-trick').onclick = function(){
+    this.disabled = true
+    this.form.submit()
+}

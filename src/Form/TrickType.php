@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class TrickType extends AbstractType
@@ -24,12 +25,18 @@ class TrickType extends AbstractType
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Nom de la figure',
                 ],
+                'constraints' => [
+                    new NotNull(message: 'Veuillez ajouter un titre.', groups: ['trick_new', 'trick_edit'])
+                ]
             ])
             ->add('content', TextareaType::class, [
                 'attr' => [
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Description de votre figure',
                 ],
+                'constraints' => [
+                    new NotNull(message: 'Veuillez ajouter une description.', groups: ['trick_new', 'trick_edit'])
+                ]
             ])
             ->add('grouptrick', EntityType::class, [
                 'class' => Group::class,
@@ -51,7 +58,7 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'constraints' => [
                     new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une image.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 images.',),
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 images.', groups: ['trick_new', 'trick_edit']),
                     new Valid(),
                 ],
             ])
@@ -67,7 +74,8 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'constraints' => [
                     new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une vidéo.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 vidéos.',)
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 vidéos.', groups: ['trick_new', 'trick_edit']),
+                    new Valid(),
                 ],
             ])
         ;
@@ -77,6 +85,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'validation_groups' => [],
         ]);
     }
 }

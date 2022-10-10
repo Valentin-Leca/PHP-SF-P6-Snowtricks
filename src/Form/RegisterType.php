@@ -66,7 +66,10 @@ class RegisterType extends AbstractType
             ->add('isAcceptedTerms', CheckboxType::class, [
                 'required' => false,
                 'label' => false,
-                'value' => 1,
+                'value' => 0,
+                'constraints' => [
+                    new NotBlank(['message' => "Merci de prendre connaissance de nos mentions légales et de les accepter."])
+                ]
             ])
         ;
     }

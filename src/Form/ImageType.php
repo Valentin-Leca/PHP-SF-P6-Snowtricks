@@ -16,6 +16,9 @@ class ImageType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
+                'attr' => [
+                    'accept' => 'image/png, image/jpeg, image/jpg',
+                ],
                 'label' => false,
                 'required' => false,
                 'constraints' => [
@@ -27,7 +30,7 @@ class ImageType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Merci d\'ajouter une image au format jpg ou png de maximum 2Mo.',
                     ]),
-                    new NotNull(message: 'Ne laissez pas un champ vide.')
+                    new NotNull(message: 'Veuillez ne pas laisser un champ vide.', groups: ['trick_new'])
                 ],
             ])
         ;
@@ -37,6 +40,7 @@ class ImageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
+            'validation_groups' => [],
         ]);
     }
 }
