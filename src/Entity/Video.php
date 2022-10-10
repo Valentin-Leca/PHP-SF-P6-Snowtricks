@@ -23,7 +23,7 @@ class Video
     private ?trick $trick_id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $videoId;
+    private ?string $videoId = null;
 
     public function getId(): ?int
     {

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class VideoType extends AbstractType
 {
@@ -22,7 +23,13 @@ class VideoType extends AbstractType
                     'placeholder' => 'Lien de votre vidéo (youtube)',
                 ],
                 'constraints' => [
-                    new NotNull(message: 'Ne laissez pas un champ vide.', groups: ['trick_new', 'trick_edit'])
+                    new NotNull(message: 'Ne laissez pas un champ vide.', groups: ['trick_new', 'trick_edit']),
+                    new Regex(
+                        pattern: "/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user|shorts)\/))([^\?&\"'>]+)/",
+                        message: 'Merci d\'ajouter une url provenant de Youtube.',
+                        match: true,
+                        groups: ['trick_new', 'trick_edit'],
+                    )
                 ]
             ])
         ;
