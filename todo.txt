@@ -1,3 +1,7 @@
 Voir ReadMe avec Thibaut
 
 Page edit voir image bloquante
+
+Rajouter dans le readMe qu'il faut config le .env (DATABASE_URL)
+
+Support montrer site avant démo création figure

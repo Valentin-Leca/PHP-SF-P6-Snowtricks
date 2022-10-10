@@ -1,4 +1,9 @@
+
 <div class="input-img mt-1 mb-1 d-flex justify-content-center">
-    {{ form_row(form.file) }}
+
+    {% if form.file.parent.vars.value is null %}
+    {{ form_row(form.file, {"value": form.file.vars.value}) }}
+    {% endif %}
+
     <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-trash-can"></i></button>
 </div>
