@@ -16,13 +16,13 @@ class VideoType extends AbstractType
         $builder
             ->add('videoname', TextType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' =>'form-control rounded-0',
                     'placeholder' => 'Lien de votre vidéo (youtube)',
                 ],
                 'constraints' => [
-                    new NotNull(message: 'Ne laissez pas un champ vide.')
+                    new NotNull(message: 'Ne laissez pas un champ vide.', groups: ['trick_new', 'trick_edit'])
                 ]
             ])
         ;
@@ -32,6 +32,7 @@ class VideoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Video::class,
+            'validation_groups' => [],
         ]);
     }
 }

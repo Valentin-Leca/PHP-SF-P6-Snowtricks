@@ -22,6 +22,11 @@ class Image
 
     private $file = null;
 
+    public function __toString(): string
+    {
+        return $this->getFile();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,7 +56,7 @@ class Image
         return $this;
     }
 
-    public function getFile(): object
+    public function getFile(): ?object
     {
         return $this->file;
     }

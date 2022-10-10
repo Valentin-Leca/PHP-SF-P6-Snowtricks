@@ -32,7 +32,7 @@ class TrickController extends AbstractController {
     public function new(Request $request, UploadFile $uploadFile, TrickRepository $trickRepository): Response {
 
         $trick = new Trick();
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['validation_groups' => 'trick_new']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,7 +91,7 @@ class TrickController extends AbstractController {
     public function edit(Request $request, UploadFile $uploadFile, Trick $trick, TrickRepository $trickRepository): Response {
 
         $this->denyAccessUnlessGranted('POST_VIEW', $this->getUser());
-        $form = $this->createForm(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick, ['validation_groups' => 'trick_edit']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

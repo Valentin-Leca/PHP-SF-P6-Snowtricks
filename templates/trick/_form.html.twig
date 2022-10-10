@@ -46,7 +46,6 @@
         {{ form_errors(form.grouptrick) }}
     </div>
 <hr>
-<input type="hidden" id="trick__token" name="trick[_token]" value="{{ csrf_token('edit-trick') }}">
         {% for message in app.flashes('error') %}
             <div class="form-group mt-2 mb-2 text-center error-msg">
                 {{ message }}
@@ -60,4 +59,4 @@
             {{ message }}
         {% endfor %}
     </div>
-{{ form_end(form, {render_rest: false}) }}
+{{ form_end(form) }}

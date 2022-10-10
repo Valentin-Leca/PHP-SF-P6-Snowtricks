@@ -51,7 +51,7 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'constraints' => [
                     new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une image.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 images.',),
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 images.', groups: ['trick_new', 'trick_edit']),
                     new Valid(),
                 ],
             ])
@@ -67,7 +67,7 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'constraints' => [
                     new Count(min: 1, max: 3, minMessage: 'Vous devez ajouter au moins une vidéo.',
-                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 vidéos.',)
+                        maxMessage: 'Vous ne pouvez pas ajouter plus de 3 vidéos.', groups: ['trick_new', 'trick_edit']),
                 ],
             ])
         ;
@@ -77,6 +77,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'validation_groups' => [],
         ]);
     }
 }
