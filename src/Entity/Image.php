@@ -51,7 +51,7 @@ class Image
         return $this;
     }
 
-    public function getFile(): object
+    public function getFile(): ?object
     {
         return $this->file;
     }
